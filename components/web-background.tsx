@@ -3,8 +3,8 @@
 import { SpiderWeb } from "@/components/spider-web"
 
 /**
- * WebBackground -- Two elegant spider webs at opposite corners,
- * each with smooth, silky bezier curves. Minimalist and unobtrusive.
+ * WebBackground -- Two realistic orb-weaver spider webs anchored at
+ * opposite corners, with subtle ambient glow. Minimalist and elegant.
  */
 export function WebBackground() {
   return (
@@ -13,7 +13,7 @@ export function WebBackground() {
       role="presentation"
       aria-hidden="true"
     >
-      {/* Subtle ambient glow */}
+      {/* Subtle ambient red glow */}
       <div
         className="absolute left-1/2 top-[12%] h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
@@ -22,20 +22,20 @@ export function WebBackground() {
         }}
       />
 
-      {/* Web 1: top-left corner */}
+      {/* Web 1: top-left corner -- realistic orb weaver web */}
       <div
-        className="absolute -left-2 -top-2 opacity-[0.28]"
+        className="absolute -left-1 -top-1 opacity-[0.30]"
         style={{ animation: "web-breathe 12s ease-in-out infinite" }}
       >
-        <SpiderWeb size={300} spokes={12} rings={7} anchor="tl" />
+        <SpiderWeb size={320} anchor="tl" />
       </div>
 
-      {/* Web 2: bottom-right corner */}
+      {/* Web 2: bottom-right corner -- mirrored variant */}
       <div
-        className="absolute -bottom-2 -right-2 opacity-[0.22]"
+        className="absolute -bottom-1 -right-1 opacity-[0.24]"
         style={{ animation: "web-breathe 14s ease-in-out infinite 3s" }}
       >
-        <SpiderWeb size={340} spokes={14} rings={8} anchor="br" />
+        <SpiderWeb size={360} anchor="br" />
       </div>
     </div>
   )
