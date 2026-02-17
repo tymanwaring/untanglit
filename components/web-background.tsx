@@ -4,11 +4,10 @@ import { useScroll, useTransform, motion, useReducedMotion } from "motion/react"
 
 /**
  * WebBackground -- A full-page spider web that dynamically weaves itself
- * as the user scrolls. Spokes draw first, then capture-spiral rings expand
- * outward, creating the sensation of a web being spun in real-time.
- *
- * Uses window-level scroll progress to drive pathLength on each layer,
- * staggered so inner rings appear before outer rings.
+ * as the user scrolls. The centre is faded to transparent using a radial
+ * mask so the hub area (which maps to the top of the viewport) stays clean
+ * and uncluttered, while the branching strands and outer rings provide
+ * depth at the periphery.
  */
 export function WebBackground() {
   const reducedMotion = useReducedMotion()
@@ -16,26 +15,20 @@ export function WebBackground() {
 
   // Spokes draw from 0-40% of scroll
   const spokeProgress = useTransform(scrollYProgress, [0, 0.4], [0, 1])
-  // Ring layers staggered across the scroll range
-  const ring1 = useTransform(scrollYProgress, [0.05, 0.25], [0, 1])
-  const ring2 = useTransform(scrollYProgress, [0.12, 0.38], [0, 1])
+  // Outer ring layers staggered across the scroll range
   const ring3 = useTransform(scrollYProgress, [0.2, 0.5], [0, 1])
   const ring4 = useTransform(scrollYProgress, [0.3, 0.65], [0, 1])
   const ring5 = useTransform(scrollYProgress, [0.4, 0.8], [0, 1])
   // Wisps appear last
   const wispProgress = useTransform(scrollYProgress, [0.6, 0.9], [0, 1])
 
-  // Slow rotation -- spins ~25 degrees over a full page scroll
+  // Slow rotation synced to scroll
   const rotation = useTransform(scrollYProgress, [0, 1], [0, 25])
-  // Gentle scale pulse -- breathes between 0.95 and 1.05
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.96, 1.04, 0.98])
 
   const stroke = "var(--node-color)"
 
-  // If reduced motion, all elements render fully, no spin
   const sp = reducedMotion ? 1 : spokeProgress
-  const r1 = reducedMotion ? 1 : ring1
-  const r2 = reducedMotion ? 1 : ring2
   const r3 = reducedMotion ? 1 : ring3
   const r4 = reducedMotion ? 1 : ring4
   const r5 = reducedMotion ? 1 : ring5
@@ -47,15 +40,6 @@ export function WebBackground() {
       role="presentation"
       aria-hidden="true"
     >
-      {/* Subtle ambient red glow at the hub */}
-      <div
-        className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{
-          background:
-            "radial-gradient(circle, oklch(0.55 0.24 25 / 0.015) 0%, transparent 50%)",
-        }}
-      />
-
       <motion.svg
         className="absolute inset-0 h-full w-full"
         viewBox="0 0 1000 1000"
@@ -68,9 +52,19 @@ export function WebBackground() {
             <feGaussianBlur stdDeviation="0.8" result="blur" />
             <feComposite in="blur" in2="SourceGraphic" operator="over" />
           </filter>
+          {/* Radial mask: centre is transparent, edges are visible */}
+          <radialGradient id="centre-fade">
+            <stop offset="0%" stopColor="black" />
+            <stop offset="25%" stopColor="black" />
+            <stop offset="42%" stopColor="white" />
+            <stop offset="100%" stopColor="white" />
+          </radialGradient>
+          <mask id="fade-centre">
+            <rect width="1000" height="1000" fill="url(#centre-fade)" />
+          </mask>
         </defs>
 
-        <g filter="url(#web-bg-glow)">
+        <g filter="url(#web-bg-glow)" mask="url(#fade-centre)">
 
           {/* ═══ RADIAL SPOKES ═══ */}
           {[
@@ -105,49 +99,6 @@ export function WebBackground() {
               opacity={s.o}
               strokeLinecap="round"
               style={{ pathLength: sp }}
-            />
-          ))}
-
-          {/* ═══ RING 1 (~60px) ═══ */}
-          {[
-            "M 488 442 Q 452 440, 442 468",
-            "M 442 468 Q 438 496, 446 520",
-            "M 446 520 Q 456 548, 484 556",
-            "M 484 556 Q 516 562, 540 548",
-            "M 540 548 Q 560 530, 562 500",
-            "M 562 500 Q 560 472, 544 454",
-            "M 544 454 Q 524 438, 488 442",
-          ].map((d, i) => (
-            <motion.path
-              key={`r1-${i}`}
-              d={d}
-              stroke={stroke}
-              strokeWidth="0.35"
-              opacity={i % 2 === 0 ? 0.05 : 0.04}
-              strokeLinecap="round"
-              style={{ pathLength: r1 }}
-            />
-          ))}
-
-          {/* ═══ RING 2 (~130px) ═══ */}
-          {[
-            "M 476 372 Q 410 366, 376 420",
-            "M 376 420 Q 348 468, 358 530",
-            "M 358 530 Q 372 590, 426 618",
-            "M 426 618 Q 486 644, 550 622",
-            "M 550 622 Q 610 596, 636 536",
-            "M 636 536 Q 650 478, 624 420",
-            "M 624 420 Q 594 368, 530 368",
-            "M 530 368 Q 500 372, 476 372",
-          ].map((d, i) => (
-            <motion.path
-              key={`r2-${i}`}
-              d={d}
-              stroke={stroke}
-              strokeWidth="0.35"
-              opacity={i % 2 === 0 ? 0.045 : 0.04}
-              strokeLinecap="round"
-              style={{ pathLength: r2 }}
             />
           ))}
 
@@ -239,10 +190,6 @@ export function WebBackground() {
               style={{ pathLength: wp }}
             />
           ))}
-
-          {/* ═══ HUB ═══ */}
-          <circle cx="500" cy="500" r="4" fill={stroke} opacity="0.05" />
-          <circle cx="500" cy="500" r="1.5" fill={stroke} opacity="0.08" />
         </g>
       </motion.svg>
     </div>
