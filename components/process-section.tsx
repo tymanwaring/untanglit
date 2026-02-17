@@ -72,13 +72,15 @@ function SilkTimeline({ containerRef }: { containerRef: React.RefObject<HTMLDivE
     "C 47 417, 53 458, 50 500",
   ].join(" ")
 
-  if (!bounds) return null
-
   return (
     <div
       ref={ref}
       className="pointer-events-none absolute left-6 w-[100px] md:left-1/2 md:-translate-x-[50px]"
-      style={{ top: bounds.top, height: bounds.height }}
+      style={
+        bounds
+          ? { top: bounds.top, height: bounds.height }
+          : { top: 0, height: "100%", opacity: 0 }
+      }
       aria-hidden="true"
     >
       <svg
@@ -86,6 +88,7 @@ function SilkTimeline({ containerRef }: { containerRef: React.RefObject<HTMLDivE
         preserveAspectRatio="none"
         fill="none"
         className="h-full w-full"
+        style={{ opacity: bounds ? 1 : 0 }}
       >
         <defs>
           <filter id="timeline-glow">
