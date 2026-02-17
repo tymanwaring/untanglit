@@ -27,9 +27,20 @@ export function WebBackground() {
             <feGaussianBlur stdDeviation="0.6" result="blur" />
             <feComposite in="blur" in2="SourceGraphic" operator="over" />
           </filter>
+          {/* Radial mask: centre is transparent (black), fading to visible (white).
+              This prevents overlapping spoke strokes from accumulating at the hub. */}
+          <radialGradient id="centre-fade" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="black" />
+            <stop offset="12%" stopColor="#333" />
+            <stop offset="22%" stopColor="white" />
+            <stop offset="100%" stopColor="white" />
+          </radialGradient>
+          <mask id="hub-mask">
+            <rect width="1000" height="1000" fill="url(#centre-fade)" />
+          </mask>
         </defs>
 
-        <g filter="url(#web-bg-glow)">
+        <g filter="url(#web-bg-glow)" mask="url(#hub-mask)">
 
           {/* ═══ RADIAL SPOKES ═══ */}
           {[
@@ -151,9 +162,7 @@ export function WebBackground() {
             />
           ))}
 
-          {/* ═══ HUB ═══ */}
-          <circle cx="500" cy="500" r="3" fill={stroke} opacity="0.04" />
-          <circle cx="500" cy="500" r="1" fill={stroke} opacity="0.06" />
+
         </g>
       </svg>
     </div>
