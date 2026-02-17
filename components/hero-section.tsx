@@ -40,7 +40,7 @@ export function HeroSection() {
       >
         <svg
           viewBox="0 0 600 600"
-          className="h-[500px] w-[500px] opacity-[0.03]"
+          className="h-[500px] w-[500px] opacity-[0.06]"
           fill="none"
         >
           {/* Pre-computed endpoints to avoid SSR/client floating-point mismatch */}
@@ -54,7 +54,7 @@ export function HeroSection() {
               y1="300"
               x2={String(x)}
               y2={String(y)}
-              stroke="var(--thread-color)"
+              stroke="var(--node-color)"
               strokeWidth="0.5"
             />
           ))}

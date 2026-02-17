@@ -57,11 +57,11 @@ export function SilkThreadSpine() {
           </filter>
         </defs>
 
-        {/* Main spine thread */}
+        {/* Main spine thread -- neon red to match spider formations */}
         <motion.path
           d={mainPath}
-          stroke="var(--thread-color)"
-          strokeWidth={1.5}
+          stroke="var(--node-color)"
+          strokeWidth={1.2}
           strokeLinecap="round"
           fill="none"
           filter="url(#silk-glow)"
@@ -74,31 +74,31 @@ export function SilkThreadSpine() {
         {/* Ghost trail behind for extra glow */}
         <motion.path
           d={mainPath}
-          stroke="var(--thread-color)"
+          stroke="var(--node-color)"
           strokeWidth={4}
           strokeLinecap="round"
           fill="none"
           style={{
             pathLength: reducedMotion ? 1 : pathLength,
-            opacity: 0.08,
+            opacity: 0.06,
           }}
           filter="url(#silk-glow)"
           strokeDashoffset={0}
         />
 
-        {/* Branch filaments */}
+        {/* Branch filaments -- subtle red silk strands */}
         {branchPaths.map((d, i) => (
           <motion.path
             key={i}
             d={d}
-            stroke="var(--thread-color)"
-            strokeWidth={0.8}
+            stroke="var(--node-color)"
+            strokeWidth={0.6}
             strokeLinecap="round"
             fill="none"
             filter="url(#silk-glow-sm)"
             style={{
               pathLength: reducedMotion ? 1 : pathLength,
-              opacity: 0.4,
+              opacity: 0.25,
             }}
             strokeDashoffset={0}
           />

@@ -40,11 +40,11 @@
   --sidebar-border: oklch(0.22 0.01 15);
   --sidebar-ring: oklch(0.55 0.24 25);
 
-  /* Silk Thread System -- crimson-touched silver threads */
-  --thread-color: oklch(0.82 0.02 60);
-  --thread-width: 1.5px;
-  --silk-glow: 0 0 15px oklch(0.82 0.04 60 / 0.3);
-  --node-glow: 0 0 12px oklch(0.55 0.24 25 / 0.5);
+  /* Silk Thread System -- neon crimson threads and spider accents */
+  --thread-color: oklch(0.70 0.06 25);
+  --thread-width: 1.2px;
+  --silk-glow: 0 0 15px oklch(0.55 0.24 25 / 0.3);
+  --node-glow: 0 0 14px oklch(0.55 0.24 25 / 0.55);
   --node-color: oklch(0.55 0.24 25);
 }
 
