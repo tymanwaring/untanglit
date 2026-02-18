@@ -4,8 +4,8 @@ const footerLinks = {
   services: [
     { label: "Code Detangling", href: "#services" },
     { label: "Architecture Unraveling", href: "#services" },
-    { label: "Performance Untying", href: "#services" },
-    { label: "UX Unknotting", href: "#services" },
+    { label: "Load-Time Loosening ", href: "#services" },
+    { label: "UX Untying", href: "#services" },
   ],
   company: [
     { label: "About Us", href: "#about" },
@@ -47,8 +47,8 @@ export function Footer() {
               <span className="font-serif text-xl font-bold text-foreground">Untanglit</span>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              We turn tangled web problems into clean, elegant solutions.
-              No knot too gnarly.
+            We turn tangled web problems into clean, elegant solutions.
+            No knot too gnarly.
             </p>
           </div>
 
@@ -117,7 +117,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <p className="text-xs text-muted-foreground">
-            2026 Untanglit. All rights reserved. No tangles were harmed in the making of this site.
+            2026 Untanglit. All rights reserved. No knots were harmed in the making of this site.
           </p>
           <a
             href="#"

@@ -11,7 +11,7 @@ export function Hero() {
         <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2">
           <span className="inline-block h-2 w-2 rounded-full bg-secondary" />
           <span className="text-sm font-medium text-muted-foreground">
-            Web consulting, but make it fun
+            Web consulting for wonderfully tangled projects
           </span>
         </div>
 

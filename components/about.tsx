@@ -6,36 +6,36 @@ const steps = [
     icon: Search,
     title: "Find the Knot",
     description:
-      "We start by mapping out the entire tangle. Deep audits, code reviews, and stakeholder interviews reveal the root causes.",
+      "We start by tracing the tangle. Audits, code reviews, and team interviews reveal what's really tied together.",
   },
   {
     number: "02",
     icon: Scissors,
-    title: "Carefully Untie",
+    title: "Untie with Intention",
     description:
-      "No cutting corners (unless cutting is the right call). We methodically resolve each dependency and issue layer by layer.",
+      "No wild cutting. We choose the smartest order of operations so each fix makes the next one easier.",
   },
   {
     number: "03",
     icon: Sparkles,
-    title: "Polish & Smooth",
+    title: "Polish the Flow",
     description:
-      "Once untangled, we refine. Clean code, clear documentation, optimized performance, and beautiful interfaces.",
+      "We refine code, UX, and performance until everything feels clean, fast, and delightfully usable.",
   },
   {
     number: "04",
     icon: Rocket,
-    title: "Ship It Straight",
+    title: "Ship It Smooth",
     description:
-      "We deliver a solution that runs smooth, scales effortlessly, and comes with the knowledge transfer to keep it that way.",
+      "You launch with confidence, plus docs and handoff support so your team keeps things beautifully untangled.",
   },
 ]
 
 const stats = [
   { value: "200+", label: "Knots Untied" },
   { value: "98%", label: "Client Satisfaction" },
-  { value: "12", label: "Years Detangling" },
-  { value: "50+", label: "Happy Clients" },
+  { value: "12", label: "Years Untangling" },
+  { value: "50+", label: "Happy Teams" },
 ]
 
 export function About() {
@@ -49,18 +49,17 @@ export function About() {
               About Us
             </span>
             <h2 className="mt-4 font-serif text-4xl font-bold tracking-tight md:text-5xl text-balance">
-              We thrive in the tangles others avoid.
+              We thrive in tangles others avoid.
             </h2>
           </div>
           <div className="flex flex-col justify-center">
             <p className="text-lg leading-relaxed text-primary-foreground/70">
-              Untanglit was born from frustration. We kept seeing brilliant businesses held back by
-              messy code, convoluted architectures, and web experiences that made users cringe. So we
-              built a team of problem-solvers who love the complicated stuff. The gnarlier the knot,
-              the bigger our grins.
+              Untanglit was built for the projects that make most teams say, "We'll deal with that later."
+              We love the tricky stuff: fragile systems, tangled architecture, and UX that needs a rescue mission.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-primary-foreground/70">
-              {"We're not just consultants \u2014 we're detectives, architects, and craftspeople who get genuine joy from making things work beautifully."}
+              We're part strategist, part builder, part detective. We work closely with your team and leave
+              things cleaner, clearer, and easier to run.
             </p>
           </div>
         </div>

@@ -12,12 +12,12 @@ const services = [
     icon: Layers,
     title: "Architecture Unraveling",
     description:
-      "We redesign messy architectures into clean, scalable systems that grow with your business.",
+      "We map the maze, simplify the structure, and leave you with an architecture that can grow up gracefully.",
     color: "bg-secondary/10 text-secondary",
   },
   {
     icon: Zap,
-    title: "Performance Untying",
+    title: "Load-Time Loosening",
     description:
       "Slow load times tying you down? We diagnose bottlenecks and unleash blazing-fast performance.",
     color: "bg-accent/10 text-accent-foreground",
@@ -55,8 +55,8 @@ export function Services() {
             What We Untangle
           </span>
           <h2 className="mt-4 font-serif text-4xl font-bold tracking-tight text-foreground md:text-5xl text-balance">
-            Every knot has a solution.{" "}
-            <span className="text-muted-foreground">We find it.</span>
+            Every knot has a plan.{" "}
+            <span className="text-muted-foreground">We bring the patient hands.</span>
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
             From legacy code to tangled user experiences, we specialize in the web problems

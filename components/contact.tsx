@@ -32,8 +32,8 @@ export function Contact() {
               Ready to get untangled?
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              Tell us about your knottiest web problem. No judgment, no jargon. Just real talk about
-              how we can help straighten things out.
+              Bring us your knotty web problem. No judgment, no buzzwords.
+              Just a practical plan and people who love solving the messy stuff.
             </p>
 
             <div className="mt-10 flex flex-col gap-6">
@@ -45,7 +45,7 @@ export function Contact() {
             {/* Fun note */}
             <div className="mt-10 rounded-2xl border border-border bg-card p-6">
               <p className="font-serif text-lg font-bold text-foreground">
-                {"\u201CThe more tangled it is, the more excited we get.\u201D"}
+                "The messier the knot, the bigger our smile."
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
                 {"\u2014 The Untanglit Team, probably before their third coffee"}
@@ -64,7 +64,7 @@ export function Contact() {
                   Message sent!
                 </h3>
                 <p className="mt-2 text-muted-foreground">
-                  {"We\u2019ll start untangling our inbox to find it. Expect a reply within 24 hours."}
+                  Your note just landed in our inbox. We will reply within one business day.
                 </p>
               </div>
             ) : (
@@ -102,7 +102,7 @@ export function Contact() {
 
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="subject" className="text-sm font-medium text-foreground">
-                    What kind of tangle?
+                    What kind of knot are we untangling?
                   </label>
                   <select
                     id="subject"
@@ -114,11 +114,11 @@ export function Contact() {
                     <option value="">Select your knot type...</option>
                     <option value="code">Code Detangling</option>
                     <option value="architecture">Architecture Unraveling</option>
-                    <option value="performance">Performance Untying</option>
+                    <option value="performance">Load-Time Loosening </option>
                     <option value="ux">UX Unknotting</option>
                     <option value="security">Security Untwisting</option>
                     <option value="seo">SEO Unsnarling</option>
-                    <option value="other">Something else entirely</option>
+                    <option value="other">Something wonderfully weird</option>
                   </select>
                 </div>
 
@@ -142,7 +142,7 @@ export function Contact() {
                   className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105"
                 >
                   <Send size={16} />
-                  Send It Over
+                  Untanglit
                 </button>
               </form>
             )}

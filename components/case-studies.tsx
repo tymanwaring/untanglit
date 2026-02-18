@@ -6,7 +6,7 @@ const cases = [
     title: "ShopWell Marketplace",
     before: "A legacy monolith with 12-second load times and checkout drop-off rates of 68%.",
     after:
-      "Migrated to microservices, reduced load times to 1.2s, and dropped checkout abandonment to 23%.",
+      "We migrated to microservices, reduced load times to 1.2s, and lowered checkout abandonment to 23%.",
     metric: "3x Revenue Increase",
     color: "border-primary/30 hover:border-primary",
     accentColor: "text-primary bg-primary/10",
@@ -17,7 +17,7 @@ const cases = [
     before:
       "A tangled React codebase with 400+ components, no design system, and 40s build times.",
     after:
-      "Built a component library, refactored state management, cut builds to 8s, and improved DX scores by 85%.",
+      "We built a component library, refactored state management, cut builds to 8s, and improved DX scores by 85%.",
     metric: "85% Faster Builds",
     color: "border-secondary/30 hover:border-secondary",
     accentColor: "text-secondary bg-secondary/10",
@@ -28,7 +28,7 @@ const cases = [
     before:
       "Patient portal failing accessibility audits with a WCAG score of 34% and security vulnerabilities.",
     after:
-      "Achieved 100% WCAG AA compliance, resolved all critical CVEs, and improved patient satisfaction by 60%.",
+      "We achieved 100% WCAG AA compliance, resolved all critical CVEs, and improved patient satisfaction by 60%.",
     metric: "100% Accessible",
     color: "border-accent/30 hover:border-accent",
     accentColor: "text-accent-foreground bg-accent/10",
@@ -45,11 +45,11 @@ export function CaseStudies() {
             Case Studies
           </span>
           <h2 className="mt-4 font-serif text-4xl font-bold tracking-tight text-foreground md:text-5xl text-balance">
-            Tangles we have conquered.
+            Knots we have proudly untied.
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Every project starts as a knot. Here are some of our favorite before-and-after
-            transformations.
+            Every project starts with a mess of constraints.
+            Here is what it looked like before and after we got involved.
           </p>
         </div>
 
@@ -66,7 +66,7 @@ export function CaseStudies() {
             href="#contact"
             className="group inline-flex items-center gap-2 font-serif text-lg font-bold text-foreground transition-colors hover:text-primary"
           >
-            Got a tangle? Tell us about it
+            Got a knot? Let's untanglit together
             <ArrowUpRight
               size={20}
               className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -110,13 +110,13 @@ function CaseCard({
       <div className="mt-6 flex flex-col gap-4">
         <div className="rounded-xl bg-muted p-4">
           <div className="mb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-            The Tangle
+            Before
           </div>
           <p className="text-sm leading-relaxed text-foreground/80">{before}</p>
         </div>
         <div className="relative rounded-xl border border-border bg-card p-4">
           <div className="mb-1 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-            Untangled
+            After
           </div>
           <p className="text-sm leading-relaxed text-foreground/80">{after}</p>
         </div>
