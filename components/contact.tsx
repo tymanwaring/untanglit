@@ -160,7 +160,7 @@ Thanks!`
                 label="hello@untanglit.com"
                 href={emailDraftHref}
               />
-              <ContactInfo icon={Phone} label="+1 (555) 123-4567" />
+              <ContactInfo icon={Phone} label="760 484 4845" />
               <ContactInfo icon={MapPin} label="Spokane, WA" />
             </div>
 
@@ -362,7 +362,7 @@ Thanks!`
                     onChange={(e) => updateField("phone", e.target.value)}
                     aria-invalid={Boolean(formErrors.phone)}
                     className={`${fieldBaseClass} ${formErrors.phone ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                    placeholder="+1 (555) 123-4567"
+                    placeholder="760 484 4845"
                   />
                   {formErrors.phone && (
                     <p className="text-xs font-serif text-primary">{formErrors.phone}</p>
