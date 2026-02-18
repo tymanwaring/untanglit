@@ -8,13 +8,17 @@ import { TeamSection } from "@/components/team-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
+import { SilkThreadSpine } from "@/components/silk-thread-spine"
 import { WebBackground } from "@/components/web-background"
 
 export default function Page() {
   return (
     <>
-      {/* Ambient spider web background */}
+      {/* Ambient spider web canvas background */}
       <WebBackground />
+
+      {/* Scroll-linked silk thread SVG overlay */}
+      <SilkThreadSpine />
 
       {/* Navigation */}
       <NavHeader />

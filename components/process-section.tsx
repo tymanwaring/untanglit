@@ -7,8 +7,8 @@ import {
   Sparkles,
   Rocket,
 } from "lucide-react"
-import React, { useRef } from "react"
-import { motion, useInView } from "motion/react"
+import { useRef } from "react"
+import { useScroll, useTransform, motion, useInView } from "motion/react"
 import { processSteps } from "@/lib/data"
 import { SectionHeading } from "@/components/section-heading"
 import { SpringReveal } from "@/components/spring-reveal"
@@ -24,66 +24,26 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 }
 
 /**
- * A vertical silk thread connecting the first timeline dot to the last.
- * Uses Framer Motion's useScroll with no target (window-level scroll)
- * and transforms the progress to only animate when the process section
- * is visible on screen.
+ * A vertical silk thread connecting dot 1 through dot 5.
+ * The container is pinned to `top: 1.25rem` and `bottom: 1.25rem`
+ * so the SVG stretches exactly from the first to the last dot.
+ * The path stays at x=50 (dead centre) with extremely subtle
+ * lateral waviness so it reads as organic silk, not a rigid ruler.
+ *
+ * 5 dots at equal spacing --> y positions 0, 125, 250, 375, 500
+ * with tiny control-point drift of +/-3px max.
  */
 function SilkTimeline() {
+  const ref = useRef<HTMLDivElement>(null)
   const reducedMotion = useReducedMotion()
-  const [bounds, setBounds] = React.useState<{ top: number; height: number } | null>(null)
-  const threadContainerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  })
+  const pathLength = useTransform(scrollYProgress, [0.05, 0.85], [0, 1])
 
-  // Measure dot positions on mount and when section is visible
-  React.useEffect(() => {
-    function measure() {
-      if (!threadContainerRef.current) return
-      // Query dots from the parent ProcessSection siblings
-      const section = threadContainerRef.current.closest("section")
-      if (!section) return
-      const dots = section.querySelectorAll<HTMLElement>("[data-timeline-dot]")
-      if (dots.length < 2) return
-
-      const sectionRect = section.getBoundingClientRect()
-      const firstRect = dots[0].getBoundingClientRect()
-      const lastRect = dots[dots.length - 1].getBoundingClientRect()
-
-      const topOffset = firstRect.top + firstRect.height / 2 - sectionRect.top
-      const bottomCentre = lastRect.top + lastRect.height / 2 - sectionRect.top
-      setBounds({ top: topOffset, height: bottomCentre - topOffset })
-    }
-
-    const observer = new ResizeObserver(measure)
-    if (threadContainerRef.current?.closest("section")) {
-      observer.observe(threadContainerRef.current.closest("section")!)
-    }
-    measure()
-
-    return () => observer.disconnect()
-  }, [])
-
-  // Track scroll manually to avoid Motion's useScroll errors
-  const [pathProgress, setPathProgress] = React.useState(0)
-
-  React.useEffect(() => {
-    function handleScroll() {
-      if (!threadContainerRef.current) return
-      const section = threadContainerRef.current.closest("section")
-      if (!section) return
-
-      const rect = section.getBoundingClientRect()
-      const vh = window.innerHeight
-      // Progress: 0 when section top is at bottom of screen,
-      // 1 when section bottom is at top of screen
-      const scrollProgress = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)))
-      setPathProgress(scrollProgress)
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
+  // Thread passes exactly through each dot centre (x=50, y=0/125/250/375/500).
+  // Subtle lateral drift in control points only -- never at the dot anchors.
   const threadPath = [
     "M 50 0",
     "C 53 42, 47 83, 50 125",
@@ -92,67 +52,64 @@ function SilkTimeline() {
     "C 47 417, 53 458, 50 500",
   ].join(" ")
 
-  // Draw thread from 0.15 to 0.75 of the scroll progress
-  const pathLength = reducedMotion ? 1 : Math.max(0, Math.min(1, (pathProgress - 0.15) / 0.6))
-
-  if (!bounds) return null
-
   return (
-    <div ref={threadContainerRef} aria-hidden="true">
-      <div
-        className="pointer-events-none absolute left-6 w-[100px] md:left-1/2 md:-translate-x-[50px]"
-        style={{ top: bounds.top, height: bounds.height }}
+    <div
+      ref={ref}
+      className="pointer-events-none absolute left-6 w-[100px] md:left-1/2 md:-translate-x-[50px]"
+      style={{ top: "1.25rem", bottom: "1.25rem" }}
+      aria-hidden="true"
+    >
+      <svg
+        viewBox="0 0 100 500"
+        preserveAspectRatio="none"
+        fill="none"
+        className="h-full w-full"
       >
-        <svg
-          viewBox="0 0 100 500"
-          preserveAspectRatio="none"
-          fill="none"
-          className="h-full w-full"
-        >
-          <defs>
-            <filter id="timeline-glow">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
+        <defs>
+          <filter id="timeline-glow">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
 
-          {/* Faint ghost trail */}
-          <path
-            d={threadPath}
-            stroke="var(--thread-color)"
-            strokeWidth="1"
-            strokeLinecap="round"
-            opacity="0.08"
-          />
+        {/* Faint ghost trail */}
+        <path
+          d={threadPath}
+          stroke="var(--thread-color)"
+          strokeWidth="1"
+          strokeLinecap="round"
+          opacity="0.08"
+        />
 
-          {/* Animated silk thread - uses strokeDasharray for smooth drawing */}
-          <path
-            d={threadPath}
-            stroke="var(--node-color)"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            filter="url(#timeline-glow)"
-            opacity="0.55"
-            strokeDasharray={`${pathLength * 1000} 1000`}
-            style={{ transition: "stroke-dasharray 0.05s linear" }}
-          />
+        {/* Animated silk thread */}
+        <motion.path
+          d={threadPath}
+          stroke="var(--node-color)"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          filter="url(#timeline-glow)"
+          style={{
+            pathLength: reducedMotion ? 1 : pathLength,
+            opacity: 0.55,
+          }}
+        />
 
-          {/* Thicker glow behind */}
-          <path
-            d={threadPath}
-            stroke="var(--node-color)"
-            strokeWidth="4"
-            strokeLinecap="round"
-            filter="url(#timeline-glow)"
-            opacity="0.08"
-            strokeDasharray={`${pathLength * 1000} 1000`}
-            style={{ transition: "stroke-dasharray 0.05s linear" }}
-          />
-        </svg>
-      </div>
+        {/* Thicker glow behind */}
+        <motion.path
+          d={threadPath}
+          stroke="var(--node-color)"
+          strokeWidth="4"
+          strokeLinecap="round"
+          style={{
+            pathLength: reducedMotion ? 1 : pathLength,
+            opacity: 0.08,
+          }}
+          filter="url(#timeline-glow)"
+        />
+      </svg>
     </div>
   )
 }
@@ -260,7 +217,7 @@ export function ProcessSection() {
       </SpringReveal>
 
       <div className="relative mx-auto max-w-4xl">
-        {/* Silk thread spanning first dot to last dot */}
+        {/* Winding silk thread timeline replacing the old straight line */}
         <SilkTimeline />
 
         <div className="flex flex-col gap-16">
@@ -283,7 +240,6 @@ export function ProcessSection() {
                 >
                   {/* Web-junction node on the spine */}
                   <div
-                    data-timeline-dot
                     className="absolute left-4 top-4 md:left-1/2 md:-translate-x-1/2"
                     aria-hidden="true"
                   >
