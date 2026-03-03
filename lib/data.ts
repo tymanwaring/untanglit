@@ -2,6 +2,7 @@ export const navigation = [
   { label: "Process", href: "#process" },
   { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
+  { label: "Pricing", href: "#pricing" },
   { label: "Work", href: "#work" },
   { label: "Team", href: "#team" },
   { label: "Testimonials", href: "#testimonials" },
@@ -245,3 +246,231 @@ export const technologies = [
   "GraphQL",
   "Vercel",
 ] as const
+
+// Pricing: based on 2024–2025 front-end dev norms (retainers $1.5k–$6k/mo, projects by page count)
+export const monthlyPlan = {
+  name: "Monthly Retainer",
+  price: 2900,
+  period: "month",
+  description:
+    "Dedicated front-end capacity with no project lock-in. Request work as you go—architecture, new features, or iterations. Ideal when scope evolves or you want an ongoing partnership.",
+  features: [
+    "Priority queue for your requests",
+    "Up to 40 hours/month front-end development",
+    "Code reviews and best-practice guidance",
+    "Pause or cancel anytime—no long-term contract",
+  ],
+} as const
+
+// One-time builds by page count so it's clear what you're paying for
+export const pagePackages = [
+  {
+    name: "1–3 Pages",
+    pageRange: "1–3 pages",
+    price: 3500,
+    description: "One flat fee for a small site: landing page, micro-site, or a few key pages. Design-to-code, responsive, and fast.",
+    features: [
+      "Fully responsive, accessible build",
+      "SEO basics and performance tuning",
+      "Handoff and light documentation",
+    ],
+  },
+  {
+    name: "4–9 Pages",
+    pageRange: "4–9 pages",
+    price: 8500,
+    description: "Multi-page marketing site or app shell. Reusable components and clear structure so you can extend it later.",
+    features: [
+      "Reusable component system",
+      "Forms or simple API integration",
+      "Design system foundations",
+    ],
+  },
+  {
+    name: "10+ Pages",
+    pageRange: "10+ pages",
+    price: 19500,
+    description: "Larger site or app: full product front-end, design system, or many content pages. Built to last and scale.",
+    features: [
+      "Full design system or app front-end",
+      "Performance and a11y audits",
+      "Team handoff and documentation",
+    ],
+  },
+] as const
+
+// Plan finder wizard: mattress-style flow to recommend a plan
+export type WizardRecommendation = "retainer" | "1-3" | "4-9" | "10+"
+
+export const planFinderWizard = {
+  intro: {
+    headline: "Not sure what you're looking for?",
+    subline:
+      "We can help find the plan that's right for you. Answer a few quick questions and we'll recommend your best fit.",
+    timeEstimate: "Takes about 1 minute",
+    cta: "Start the plan finder",
+  },
+  steps: [
+    {
+      id: "need",
+      question: "What do you need?",
+      options: [
+        {
+          id: "ongoing",
+          label: "Ongoing front-end support",
+          description: "I want a dedicated team or capacity I can tap month to month.",
+          recommendation: "retainer" as WizardRecommendation,
+          nextStep: "timeline",
+        },
+        {
+          id: "onetime",
+          label: "A one-time site or app build",
+          description: "I have a defined project with a clear scope.",
+          nextStep: "pages",
+        },
+        {
+          id: "unsure",
+          label: "Not sure yet",
+          description: "My scope might change or I'm still figuring it out.",
+          nextStep: "pages",
+        },
+      ],
+    },
+    {
+      id: "pages",
+      question: "Roughly how many pages or main screens?",
+      options: [
+        {
+          id: "1-3",
+          label: "Just a few (1–3)",
+          description: "Landing page, micro-site, or a handful of key pages.",
+          recommendation: "1-3" as WizardRecommendation,
+          nextStep: "timeline",
+        },
+        {
+          id: "4-9",
+          label: "A handful (4–9)",
+          description: "Multi-page marketing site or a small app.",
+          recommendation: "4-9" as WizardRecommendation,
+          nextStep: "timeline",
+        },
+        {
+          id: "10+",
+          label: "Lots (10+)",
+          description: "Large site, product front-end, or many screens.",
+          recommendation: "10+" as WizardRecommendation,
+          nextStep: "timeline",
+        },
+        {
+          id: "unsure-pages",
+          label: "Not sure yet",
+          description: "Scope might grow or I'd rather not lock in a number.",
+          recommendation: "retainer" as WizardRecommendation,
+          nextStep: "timeline",
+        },
+      ],
+    },
+    {
+      id: "timeline",
+      question: "What's your timeline?",
+      options: [
+        {
+          id: "asap",
+          label: "ASAP",
+          description: "We need to move quickly.",
+          nextStep: "designs",
+        },
+        {
+          id: "flexible",
+          label: "Flexible",
+          description: "We have some runway and want to do it right.",
+          nextStep: "designs",
+        },
+        {
+          id: "not-sure-timeline",
+          label: "Not sure yet",
+          description: "Still figuring out the roadmap.",
+          nextStep: "designs",
+        },
+      ],
+    },
+    {
+      id: "designs",
+      question: "Do you have designs ready?",
+      options: [
+        {
+          id: "yes-designs",
+          label: "Yes, we have Figma (or similar)",
+          description: "Ready for design-to-code or implementation.",
+          nextStep: "priorities",
+        },
+        {
+          id: "no-designs",
+          label: "No, we need guidance",
+          description: "We might need help with UX or design direction.",
+          nextStep: "priorities",
+        },
+        {
+          id: "in-progress-designs",
+          label: "In progress",
+          description: "Designs are being created or iterated.",
+          nextStep: "priorities",
+        },
+      ],
+    },
+    {
+      id: "priorities",
+      question: "What matters most for this project?",
+      options: [
+        {
+          id: "speed",
+          label: "Ship fast",
+          description: "We need to get something live quickly.",
+          nextStep: "team",
+        },
+        {
+          id: "quality",
+          label: "Quality and maintainability",
+          description: "We want something that lasts and is easy to extend.",
+          nextStep: "team",
+        },
+        {
+          id: "budget",
+          label: "Budget clarity",
+          description: "We want predictable scope and pricing.",
+          nextStep: "team",
+        },
+        {
+          id: "balanced",
+          label: "Balanced",
+          description: "A mix of speed, quality, and clarity.",
+          nextStep: "team",
+        },
+      ],
+    },
+    {
+      id: "team",
+      question: "Who's on your side?",
+      options: [
+        {
+          id: "solo",
+          label: "Just me",
+          description: "I'm the main decision-maker and doer.",
+          nextStep: "result",
+        },
+        {
+          id: "small-team",
+          label: "Small team (2–5)",
+          description: "We'll collaborate and hand off.",
+          nextStep: "result",
+        },
+        {
+          id: "in-house",
+          label: "We have devs in-house",
+          description: "We need front-end expertise to complement the team.",
+          nextStep: "result",
+        },
+      ],
+    },
+  ],
+} as const

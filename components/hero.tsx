@@ -1,6 +1,12 @@
+"use client"
+
 import { ArrowDown } from "lucide-react"
 
-export function Hero() {
+interface HeroProps {
+  onOpenWizard?: () => void
+}
+
+export function Hero({ onOpenWizard }: HeroProps) {
   const tickerItems = Array.from({ length: 8 }, () => "Untanglit")
   const bandItems = [
     "Code Detangling",
@@ -60,15 +66,25 @@ export function Hero() {
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <a
-            href="#contact"
-            className="rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground transition-transform hover:scale-105"
-          >
-            Start Untangling
-          </a>
+          {onOpenWizard ? (
+            <button
+              type="button"
+              onClick={onOpenWizard}
+              className="rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary-hover hover:scale-105"
+            >
+              Find my plan
+            </button>
+          ) : (
+            <a
+              href="#contact"
+              className="rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary-hover hover:scale-105"
+            >
+              Start Untangling
+            </a>
+          )}
           <a
             href="#cases"
-            className="rounded-full border-2 border-foreground/20 px-8 py-3.5 text-base font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
+            className="rounded-full border-2 border-foreground/20 px-8 py-3.5 text-base font-semibold text-foreground transition-colors hover:border-primary-hover hover:text-primary-hover"
           >
             See Our Work
           </a>

@@ -170,7 +170,7 @@ export function ContactSection() {
                 type="submit"
                 size="lg"
                 disabled={isPending}
-                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 sm:w-auto"
+                className="w-full bg-primary text-primary-foreground hover:bg-primary-hover sm:w-auto"
               >
                 {isPending ? "Sending..." : "Send Message"}
               </Button>

@@ -6,6 +6,7 @@ import { BrandKnotIcon } from "@/components/brand-knot-icon"
 
 const navLinks = [
   { label: "Services", href: "#services" },
+  { label: "Pricing", href: "#pricing" },
   { label: "How We Untangle", href: "#about" },
   { label: "Knots We've Untied", href: "#cases" },
   { label: "Contact", href: "#contact" },
@@ -42,7 +43,7 @@ export function Navigation() {
         {/* CTA */}
         <a
           href="#contact"
-          className="hidden rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105 md:inline-block"
+          className="hidden rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover hover:scale-105 md:inline-block"
         >
           Get Untangled
         </a>
@@ -76,7 +77,7 @@ export function Navigation() {
               <a
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                className="mt-2 inline-block rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground"
+                className="mt-2 inline-block rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
               >
                 Get Untangled
               </a>

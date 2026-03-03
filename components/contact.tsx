@@ -34,7 +34,7 @@ const initialFormState: ContactFormState = {
 }
 
 const fieldBaseClass =
-  "rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+  "rounded-xl border border-input bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
 
 function validateForm(state: ContactFormState): ContactFormErrors {
   const errors: ContactFormErrors = {}
@@ -176,7 +176,7 @@ Thanks!`
           </div>
 
           {/* Right column - Form */}
-          <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div className="rounded-2xl border border-border bg-card p-8 shadow-sm md:p-10">
             {submitted ? (
               <div className="flex h-full flex-col items-center justify-center py-12 text-center">
                 <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10">
@@ -190,8 +190,8 @@ Thanks!`
                 </p>
               </div>
             ) : (
-              <form noValidate onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <div className="flex flex-col gap-1.5">
+              <form noValidate onSubmit={handleSubmit} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="name" className="text-sm font-medium text-foreground">
                     Name
                   </label>
@@ -208,7 +208,7 @@ Thanks!`
                     <p className="text-xs font-serif text-primary">{formErrors.name}</p>
                   )}
                 </div>
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="company" className="text-sm font-medium text-foreground">
                     Company <span className="text-muted-foreground">(optional)</span>
                   </label>
@@ -222,7 +222,7 @@ Thanks!`
                   />
                 </div>
 
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="companySize" className="text-sm font-medium text-foreground">
                     Company size
                     {formState.company.trim() && (
@@ -248,7 +248,7 @@ Thanks!`
                     <p className="text-xs font-serif text-primary">{formErrors.companySize}</p>
                   )}
                 </div>
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="projectType" className="text-sm font-medium text-foreground">
                     Project type
                   </label>
@@ -272,7 +272,7 @@ Thanks!`
                   )}
                 </div>
 
-                <div className="flex flex-col gap-1.5 md:col-span-2 lg:col-span-2">
+                <div className="flex flex-col gap-2 md:col-span-2 lg:col-span-2">
                   <label htmlFor="currentStack" className="text-sm font-medium text-foreground">
                     Current stack
                   </label>
@@ -290,7 +290,7 @@ Thanks!`
                   )}
                 </div>
 
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="timeline" className="text-sm font-medium text-foreground">
                     Timeline
                   </label>
@@ -311,7 +311,7 @@ Thanks!`
                     <p className="text-xs font-serif text-primary">{formErrors.timeline}</p>
                   )}
                 </div>
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="budget" className="text-sm font-medium text-foreground">
                     Budget
                   </label>
@@ -334,7 +334,7 @@ Thanks!`
                   )}
                 </div>
 
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="email" className="text-sm font-medium text-foreground">
                     Email
                   </label>
@@ -351,7 +351,7 @@ Thanks!`
                     <p className="text-xs font-serif text-primary">{formErrors.email}</p>
                   )}
                 </div>
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="phone" className="text-sm font-medium text-foreground">
                     Phone number
                   </label>
@@ -369,7 +369,7 @@ Thanks!`
                   )}
                 </div>
 
-                <div className="flex flex-col gap-1.5 md:col-span-2 lg:col-span-2">
+                <div className="flex flex-col gap-2 md:col-span-2 lg:col-span-2">
                   <label htmlFor="bestContact" className="text-sm font-medium text-foreground">
                     Best way to contact
                   </label>
@@ -389,13 +389,13 @@ Thanks!`
                   )}
                 </div>
 
-                <div className="flex flex-col gap-1.5 md:col-span-2 lg:col-span-3">
+                <div className="flex flex-col gap-2 md:col-span-2 lg:col-span-3">
                   <label htmlFor="message" className="text-sm font-medium text-foreground">
                     Describe the knot
                   </label>
                   <textarea
                     id="message"
-                    rows={3}
+                    rows={4}
                     value={formState.message}
                     onChange={(e) => updateField("message", e.target.value)}
                     aria-invalid={Boolean(formErrors.message)}
@@ -407,16 +407,16 @@ Thanks!`
                   )}
                 </div>
 
-                <div className="mt-1 flex items-center gap-3 md:col-span-2 lg:col-span-3">
+                <div className="mt-6 flex items-center gap-3 md:col-span-2 lg:col-span-3">
                   {formState.timeline === "asap" && (
-                    <p className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg border border-amber-300/70 bg-amber-50/70 px-3 py-2 text-xs text-amber-800">
+                    <p className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg border border-primary/30 bg-primary/10 px-3 py-2 text-xs text-foreground">
                       <AlertTriangle size={14} className="shrink-0" />
                       ASAP requests may include rush charges.
                     </p>
                   )}
                   <button
                     type="submit"
-                    className="ml-auto inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105"
+                    className="ml-auto inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover hover:scale-105"
                   >
                     <Send size={16} />
                     Get a quote to Untanglit
@@ -440,7 +440,7 @@ Thanks!`
             <button
               type="button"
               onClick={() => setShowDraftReminder(false)}
-              className="mt-5 inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105"
+              className="mt-5 inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover hover:scale-105"
             >
               Got it
             </button>
