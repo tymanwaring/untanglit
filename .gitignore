@@ -5,3 +5,4 @@ node_modules/
 .nx/
 
 .cursor/
+config.bat
