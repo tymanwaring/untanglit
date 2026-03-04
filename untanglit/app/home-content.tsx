@@ -7,7 +7,6 @@ import { Pricing } from "@/components/pricing"
 import { About } from "@/components/about"
 import { CaseStudies } from "@/components/case-studies"
 import { Contact } from "@/components/contact"
-import { PlanFinderWizard } from "@/components/plan-finder-wizard"
 
 export function HomeContent() {
   const [wizardOpen, setWizardOpen] = useState(false)

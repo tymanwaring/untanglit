@@ -74,6 +74,7 @@ export function PlanFinderWizard({ open: controlledOpen, onOpenChange: controlle
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null)
   const [recommendation, setRecommendation] =
     useState<WizardRecommendation | null>(null)
+  const [rushRequested, setRushRequested] = useState(false)
   const [history, setHistory] = useState<string[]>([])
 
   const steps = planFinderWizard.steps
@@ -90,6 +91,7 @@ export function PlanFinderWizard({ open: controlledOpen, onOpenChange: controlle
     setCurrentStepId(null)
     setSelectedOptionId(null)
     setRecommendation(null)
+    setRushRequested(false)
     setHistory([])
   }
 
@@ -110,6 +112,7 @@ export function PlanFinderWizard({ open: controlledOpen, onOpenChange: controlle
     setSelectedOptionId(null)
     setHistory([steps[0].id])
     setRecommendation(null)
+    setRushRequested(false)
   }
 
   const handleBack = () => {
@@ -131,6 +134,9 @@ export function PlanFinderWizard({ open: controlledOpen, onOpenChange: controlle
     const nextId = selectedOption.nextStep
     if (hasRecommendation(selectedOption)) {
       setRecommendation(selectedOption.recommendation)
+    }
+    if (currentStep.id === "rush") {
+      setRushRequested(selectedOption.id === "rush-yes")
     }
     setSelectedOptionId(null)
     if (nextId === RESULT_STEP_ID) {
@@ -200,6 +206,11 @@ export function PlanFinderWizard({ open: controlledOpen, onOpenChange: controlle
                 <p className="mt-5 text-muted-foreground">
                   {plan.reason}
                 </p>
+                {rushRequested && (
+                  <p className="mt-4 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-foreground">
+                    You indicated rush delivery. We'll include rush timeline and any surcharge in your quote.
+                  </p>
+                )}
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Button asChild size="lg">
                     <Link href="#contact" onClick={handleCloseAfterCta}>
