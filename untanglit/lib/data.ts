@@ -273,6 +273,7 @@ export const pagePackages = [
       "Fully responsive, accessible build",
       "SEO basics and performance tuning",
       "Handoff and light documentation",
+      "Rush delivery available — we'll confirm timeline and surcharge in your quote",
     ],
   },
   {
@@ -284,6 +285,7 @@ export const pagePackages = [
       "Reusable component system",
       "Forms or simple API integration",
       "Design system foundations",
+      "Rush delivery available — we'll confirm timeline and surcharge in your quote",
     ],
   },
   {
@@ -295,6 +297,7 @@ export const pagePackages = [
       "Full design system or app front-end",
       "Performance and a11y audits",
       "Team handoff and documentation",
+      "Rush delivery available — we'll confirm timeline and surcharge in your quote",
     ],
   },
 ] as const
@@ -456,18 +459,36 @@ export const planFinderWizard = {
           id: "solo",
           label: "Just me",
           description: "I'm the main decision-maker and doer.",
-          nextStep: "result",
+          nextStep: "rush",
         },
         {
           id: "small-team",
           label: "Small team (2–5)",
           description: "We'll collaborate and hand off.",
-          nextStep: "result",
+          nextStep: "rush",
         },
         {
           id: "in-house",
           label: "We have devs in-house",
           description: "We need front-end expertise to complement the team.",
+          nextStep: "rush",
+        },
+      ],
+    },
+    {
+      id: "rush",
+      question: "Need rush delivery?",
+      options: [
+        {
+          id: "rush-yes",
+          label: "Yes, ASAP",
+          description: "We need it done on a compressed timeline.",
+          nextStep: "result",
+        },
+        {
+          id: "rush-no",
+          label: "No, standard timeline",
+          description: "We have flexibility on delivery.",
           nextStep: "result",
         },
       ],

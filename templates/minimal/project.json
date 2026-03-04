@@ -1,0 +1,12 @@
+{
+  "name": "template-minimal",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx serve . -p 4200",
+        "cwd": "{projectRoot}"
+      }
+    }
+  }
+}
