@@ -3,11 +3,11 @@ import Link from 'next/link'
 import { Header } from './components/header'
 
 const IMG = '/images/templates/indie-author'
-const HERO_IMAGE = `${IMG}/stack-of-books.jpg`
+const HERO_IMAGE = `${IMG}/stack-of-books.webp`
 const BOOKS = [
-  { title: '101 Essays', subtitle: 'Essays', cover: `${IMG}/101-Essays.jpg`, href: '#' },
-  { title: 'Your Heart is the Sea', subtitle: 'Fiction', cover: `${IMG}/Heart-Sea.jpg`, href: '#' },
-  { title: 'Soul', subtitle: 'Fiction', cover: `${IMG}/Soul.jpg`, href: '#' },
+  { title: '101 Essays', subtitle: 'Essays', cover: `${IMG}/101-Essays.webp`, href: '#' },
+  { title: 'Your Heart is the Sea', subtitle: 'Fiction', cover: `${IMG}/Heart-Sea.webp`, href: '#' },
+  { title: 'Soul', subtitle: 'Fiction', cover: `${IMG}/Soul.webp`, href: '#' },
 ]
 
 export default function IndieAuthorPage() {
