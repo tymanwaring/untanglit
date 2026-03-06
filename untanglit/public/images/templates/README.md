@@ -9,3 +9,5 @@ Each template folder can have a **homepage preview** used on the `/templates` li
 
 
 **Use for compression:** https://squoosh.app
+
+**For Page speed:** https://pagespeed.web.dev/
