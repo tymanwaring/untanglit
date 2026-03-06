@@ -1,0 +1,20 @@
+/* Indie-author template theme – Tailwind from root layout */
+:root {
+  --color-accent: #1b4332;
+  --color-accent-dark: #0d2818;
+  --color-ink: #1a1a1a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+input[type="email"],
+input[type="text"],
+textarea {
+  @apply transition-colors duration-150;
+}
+input:focus,
+textarea:focus {
+  @apply outline-none ring-2 ring-[var(--color-accent)]/20 border-[var(--color-accent)];
+}

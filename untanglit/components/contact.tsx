@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Send, Mail, MapPin, Phone, AlertTriangle } from "lucide-react"
+import { SectionDecorations } from "@/components/section-decorations"
 
 type ContactFormState = {
   name: string
@@ -138,8 +139,9 @@ Thanks!`
   }
 
   return (
-    <section id="contact" className="relative bg-muted py-12 md:py-16">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="contact" className="relative overflow-hidden bg-muted py-12 md:py-16">
+      <SectionDecorations variant="contact" />
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
           {/* Left column - CTA text */}
           <div>

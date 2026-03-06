@@ -1,4 +1,5 @@
 import { Code, Layers, Zap, Palette, Database, BarChart3 } from "lucide-react"
+import { SectionDecorations } from "@/components/section-decorations"
 
 const services = [
   {
@@ -56,8 +57,9 @@ const knotVariants = [
 
 export function Services() {
   return (
-    <section id="services" className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="services" className="relative overflow-hidden py-24 md:py-32">
+      <SectionDecorations variant="services" />
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
         {/* Section header */}
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-primary">
