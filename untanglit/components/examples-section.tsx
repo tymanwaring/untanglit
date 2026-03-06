@@ -5,6 +5,9 @@ import Link from "next/link"
 import { examples } from "@/lib/examples"
 import { SectionDecorations } from "@/components/section-decorations"
 
+const CARD_BLUR =
+  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQADAPwCd/9k="
+
 export function ExamplesSection() {
   return (
     <section id="examples" className="relative overflow-hidden border-t border-border bg-muted/30 py-16">
@@ -31,8 +34,10 @@ export function ExamplesSection() {
                     alt={t.previewAlt}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 640px) 100vw, 50vw"
+                    sizes="(max-width: 640px) 100vw, 480px"
                     quality={75}
+                    placeholder="blur"
+                    blurDataURL={CARD_BLUR}
                   />
                 </div>
                 <div className="p-4">
