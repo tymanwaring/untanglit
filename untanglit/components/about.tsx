@@ -1,4 +1,5 @@
 import { Search, Scissors, Sparkles, Rocket } from "lucide-react"
+import { SectionDecorations } from "@/components/section-decorations"
 
 const steps = [
   {
@@ -40,8 +41,9 @@ const stats = [
 
 export function About() {
   return (
-    <section id="about" className="relative bg-foreground py-24 text-primary-foreground md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="about" className="relative overflow-hidden bg-foreground py-24 text-primary-foreground md:py-32">
+      <SectionDecorations variant="about" />
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
         {/* About header */}
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
@@ -98,20 +100,6 @@ export function About() {
           </div>
         </div>
       </div>
-
-      {/* Decorative corner tangles */}
-      <svg
-        className="absolute left-0 top-0 h-48 w-48 text-primary-foreground/5"
-        viewBox="0 0 200 200"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M0 100C40 60 80 20 120 40C160 60 140 120 100 120C60 120 40 80 80 60"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
-      </svg>
     </section>
   )
 }

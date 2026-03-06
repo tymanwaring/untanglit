@@ -3,6 +3,7 @@
 import { Repeat, FileText } from "lucide-react"
 import Link from "next/link"
 import { monthlyPlan, pagePackages, planFinderWizard } from "@/lib/data"
+import { SectionDecorations } from "@/components/section-decorations"
 import { Button } from "@/components/ui/button"
 import { PlanFinderWizard } from "@/components/plan-finder-wizard"
 
@@ -30,8 +31,9 @@ export function Pricing({ wizardOpen, wizardOnOpenChange }: PricingProps = {}) {
   const isWizardControlled = wizardOpen !== undefined && wizardOnOpenChange !== undefined
 
   return (
-    <section id="pricing" className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="pricing" className="relative overflow-hidden py-24 md:py-32">
+      <SectionDecorations variant="pricing" />
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-sm font-semibold uppercase tracking-widest text-primary">
             Pricing

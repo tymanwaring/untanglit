@@ -6,9 +6,10 @@
     "build": "nx build untanglit",
     "dev": "nx run untanglit:dev",
     "dev:construction": "nx run construction:dev",
+    "dev:indie-author": "nx run indie-author:dev",
     "start": "nx run untanglit:start",
     "lint": "nx run untanglit:lint",
-    "postinstall": "cd untanglit && npm install && cd ../modern_templates/construction && npm install"
+    "postinstall": "cd untanglit && npm install && cd ../modern_templates/construction && npm install && cd ../indie-author && npm install"
   },
   "devDependencies": {
     "nx": "22.5.3"

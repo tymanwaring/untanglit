@@ -162,6 +162,42 @@ summary *,
   cursor: inherit;
 }
 
+/* Template pages: use normal OS cursor (no custom SVG) */
+[data-template-page],
+[data-template-page] * {
+  cursor: default;
+}
+[data-template-page] a,
+[data-template-page] button,
+[data-template-page] summary,
+[data-template-page] [role='button'],
+[data-template-page] input[type='button'],
+[data-template-page] input[type='submit'],
+[data-template-page] input[type='reset'],
+[data-template-page] select,
+[data-template-page] option {
+  cursor: pointer;
+}
+[data-template-page] a *,
+[data-template-page] button *,
+[data-template-page] summary *,
+[data-template-page] [role='button'] * {
+  cursor: inherit;
+}
+[data-template-page] p,
+[data-template-page] h1,
+[data-template-page] h2,
+[data-template-page] h3,
+[data-template-page] h4,
+[data-template-page] h5,
+[data-template-page] h6,
+[data-template-page] li,
+[data-template-page] input:not([type='button']):not([type='submit']):not([type='reset']):not([type='checkbox']):not([type='radio']),
+[data-template-page] textarea,
+[data-template-page] [contenteditable='true'] {
+  cursor: text;
+}
+
 /* Custom marquee animation */
 @keyframes marquee {
   0% { transform: translateX(0); }
@@ -187,17 +223,6 @@ summary *,
 
 .animate-draw {
   animation: draw-line 2s ease-in-out forwards;
-}
-
-/* Wiggle for fun interactive hover */
-@keyframes wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-3deg); }
-  75% { transform: rotate(3deg); }
-}
-
-.hover-wiggle:hover {
-  animation: wiggle 0.4s ease-in-out;
 }
 
 /* Float animation for decorative elements */
