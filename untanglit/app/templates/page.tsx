@@ -5,6 +5,9 @@ import { Footer } from "@/components/footer"
 import type { Metadata } from "next"
 import { examples } from "@/lib/examples"
 
+const CARD_BLUR =
+  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQADAPwCd/9k="
+
 export const dynamic = 'force-static'
 
 export const metadata: Metadata = {
@@ -40,8 +43,10 @@ export default function TemplatesPage() {
                       alt={t.previewAlt}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 640px) 100vw, 50vw"
+                      sizes="(max-width: 640px) 100vw, 480px"
                       quality={75}
+                      placeholder="blur"
+                      blurDataURL={CARD_BLUR}
                     />
                   </div>
                   <div className="p-6">
