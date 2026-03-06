@@ -24,7 +24,11 @@ export default function IndieAuthorPage() {
               fill
               className="object-cover"
               priority
-              sizes="100vw"
+              fetchPriority="high"
+              sizes="(max-width: 1280px) 100vw, 1280px"
+              quality={80}
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQADAPwCd/9k="
             />
             <div className="absolute inset-0 bg-[var(--color-ink)]/60" aria-hidden />
           </div>
@@ -62,8 +66,9 @@ export default function IndieAuthorPage() {
                       alt={title}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px"
                       loading="lazy"
+                      quality={75}
                     />
                   </div>
                   <div className="p-4 bg-white border-t border-gray-100">

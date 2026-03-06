@@ -41,6 +41,7 @@ export default function TemplatesPage() {
                       fill
                       className="object-cover"
                       sizes="(max-width: 640px) 100vw, 50vw"
+                      quality={75}
                     />
                   </div>
                   <div className="p-6">
