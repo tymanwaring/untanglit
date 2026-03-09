@@ -161,6 +161,7 @@ export default function RestaurantPage() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={75}
                 />
               </div>
               <div>
