@@ -3,6 +3,8 @@ import { Header } from './components/header'
 import { BookingSection } from './components/booking-section'
 
 const HERO_IMAGE = '/images/templates/auto-shop/home.webp'
+const HERO_BLUR =
+  'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBEQACEQADAPwCd/9k='
 
 export const SERVICES = [
   {
@@ -52,6 +54,8 @@ export default function AutoShopPage() {
               fetchPriority="high"
               sizes="(max-width: 1280px) 100vw, 1280px"
               quality={75}
+              placeholder="blur"
+              blurDataURL={HERO_BLUR}
             />
             <div className="absolute inset-0 bg-[var(--color-footer)]/70" aria-hidden />
           </div>
