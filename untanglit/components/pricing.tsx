@@ -2,7 +2,7 @@
 
 import { Repeat, FileText } from "lucide-react"
 import Link from "next/link"
-import { monthlyPlan, pagePackages, planFinderWizard } from "@/lib/data"
+import { monthlyPlan, pagePackages, planFinderWizard, siteReviewMailto } from "@/lib/data"
 import { SectionDecorations } from "@/components/section-decorations"
 import { Button } from "@/components/ui/button"
 import { PlanFinderWizard } from "@/components/plan-finder-wizard"
@@ -109,6 +109,15 @@ export function Pricing({ wizardOpen, wizardOnOpenChange }: PricingProps = {}) {
               <PlanFinderWizard />
             )}
           </div>
+          <p className="mt-6 text-center">
+            <a
+              href={siteReviewMailto}
+              className="text-sm font-medium text-muted-foreground underline decoration-primary/50 underline-offset-2 transition-colors hover:text-primary"
+            >
+              Or schedule a free 15-minute site review
+            </a>
+            <span className="mt-1 block text-xs text-muted-foreground">No commitment—just honest advice.</span>
+          </p>
         </div>
       </div>
     </section>

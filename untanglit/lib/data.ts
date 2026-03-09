@@ -236,6 +236,12 @@ export const socialLinks = [
   { label: "Email", href: "mailto:hello@untanglit.dev", icon: "Mail" as const },
 ] as const
 
+/** Mailto for "Schedule a free 15-minute site review" — opens email draft immediately */
+export const siteReviewMailto =
+  `mailto:hello@untanglit.com?subject=${encodeURIComponent("Free 15-minute site review")}&body=${encodeURIComponent(
+    `Hi,\n\nI'd like to schedule a free 15-minute site review. No commitment—just honest advice.\n\nName:\nBest way to reach me (email or phone):\nCurrent site (if any):\n`
+  )}`
+
 export const technologies = [
   "React",
   "Next.js",
@@ -247,16 +253,16 @@ export const technologies = [
   "Vercel",
 ] as const
 
-// Pricing: based on 2024–2025 front-end dev norms (retainers $1.5k–$6k/mo, projects by page count)
+// Pricing: small-business friendly retainer; projects by page count
 export const monthlyPlan = {
   name: "Monthly Retainer",
-  price: 2900,
+  price: 199,
   period: "month",
   description:
-    "Dedicated front-end capacity with no project lock-in. Request work as you go—architecture, new features, or iterations. Ideal when scope evolves or you want an ongoing partnership.",
+    "Ongoing front-end support for small businesses. Request work as you go—updates, new pages, or small features. No project lock-in; pause or scale when you need to.",
   features: [
     "Priority queue for your requests",
-    "Up to 40 hours/month front-end development",
+    "Up to 10 hours/month front-end development",
     "Code reviews and best-practice guidance",
     "Pause or cancel anytime—no long-term contract",
   ],

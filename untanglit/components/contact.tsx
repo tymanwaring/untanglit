@@ -1,20 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { Send, Mail, MapPin, Phone, AlertTriangle } from "lucide-react"
+import { Send, Mail, MapPin, Phone } from "lucide-react"
 import { SectionDecorations } from "@/components/section-decorations"
+import { siteReviewMailto } from "@/lib/data"
 
 type ContactFormState = {
   name: string
-  company: string
-  companySize: string
-  projectType: string
-  currentStack: string
-  timeline: string
-  budget: string
   email: string
   phone: string
-  bestContact: string
+  interest: string
   message: string
 }
 
@@ -22,15 +17,9 @@ type ContactFormErrors = Partial<Record<keyof ContactFormState, string>>
 
 const initialFormState: ContactFormState = {
   name: "",
-  company: "",
-  companySize: "",
-  projectType: "",
-  currentStack: "",
-  timeline: "",
-  budget: "",
   email: "",
   phone: "",
-  bestContact: "",
+  interest: "",
   message: "",
 }
 
@@ -41,66 +30,35 @@ function validateForm(state: ContactFormState): ContactFormErrors {
   const errors: ContactFormErrors = {}
 
   if (!state.name.trim()) errors.name = "Please tell us your name."
-  if (!state.projectType) errors.projectType = "Please choose a project type."
-  if (!state.currentStack.trim()) errors.currentStack = "Please share your current stack."
-  if (!state.timeline) errors.timeline = "Please choose a timeline."
-  if (!state.budget) errors.budget = "Please choose a budget range."
   if (!state.email.trim()) {
     errors.email = "Please enter your email."
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email.trim())) {
     errors.email = "Please enter a valid email address."
-  }
-  if (!state.phone.trim()) errors.phone = "Please enter a phone number."
-  if (!state.bestContact) errors.bestContact = "Please select your preferred contact method."
-  if (!state.message.trim()) errors.message = "Please describe the knot."
-  if (state.company.trim() && !state.companySize) {
-    errors.companySize = "Company size is required when company is provided."
   }
 
   return errors
 }
 
 function buildInquiryEmailBody(state: ContactFormState) {
-  const optionalCompany = state.company.trim() || "N/A"
-  const optionalCompanySize = state.companySize.trim() || "N/A"
-
-  return `Hi Untanglit team,
-
-I would like to get a quote to untanglit this project.
-
-Name: ${state.name.trim()}
-Company: ${optionalCompany}
-Company size: ${optionalCompanySize}
-Project type: ${state.projectType}
-Current stack: ${state.currentStack.trim()}
-Timeline: ${state.timeline}
-Budget: ${state.budget}
-Email: ${state.email.trim()}
-Phone: ${state.phone.trim()}
-Best way to contact: ${state.bestContact}
-
-Describe the knot:
-${state.message.trim()}
-`
+  const lines = [
+    `Hi Untanglit team,`,
+    ``,
+    `I'd like to get in touch.`,
+    ``,
+    `Name: ${state.name.trim()}`,
+    `Email: ${state.email.trim()}`,
+  ]
+  if (state.phone.trim()) lines.push(`Phone: ${state.phone.trim()}`)
+  if (state.interest) lines.push(`Interested in: ${state.interest}`)
+  if (state.message.trim()) {
+    lines.push(``, `Message:`, state.message.trim())
+  }
+  return lines.join("\n")
 }
 
 export function Contact() {
-  const emailDraftHref = `mailto:hello@untanglit.com?subject=${encodeURIComponent("Untanglit Project Inquiry")}&body=${encodeURIComponent(
-    `Hi Untanglit team,
-
-I would love help untangling a project.
-
-Name:
-Company:
-Project type:
-Current stack:
-Goals:
-Timeline:
-Budget:
-
-Best contact:
-
-Thanks!`
+  const emailDraftHref = `mailto:hello@untanglit.com?subject=${encodeURIComponent("Hello from your website")}&body=${encodeURIComponent(
+    `Hi,\n\nI'd like to get in touch.\n\nName:\nEmail:\nPhone:\n\nWhat I'm looking for:\n\nThanks!`
   )}`
 
   const [formState, setFormState] = useState<ContactFormState>(initialFormState)
@@ -126,7 +84,7 @@ Thanks!`
       return
     }
 
-    const subject = "New Untanglit Quote Request"
+    const subject = "Website inquiry"
     const body = buildInquiryEmailBody(formState)
     const mailtoHref = `mailto:hello@untanglit.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 
@@ -148,12 +106,21 @@ Thanks!`
             <span className="text-sm font-semibold uppercase tracking-widest text-primary">
               Contact
             </span>
-            <h2 className="mt-4 font-serif text-4xl font-bold tracking-tight text-foreground md:text-5xl text-balance">
-              Ready to get untangled?
+            <div className="mt-6 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5">
+              <p className="font-semibold text-foreground">Schedule a free 15-minute site review</p>
+              <p className="mt-1 text-sm text-muted-foreground">No commitment—just honest advice.</p>
+              <a
+                href={siteReviewMailto}
+                className="mt-4 inline-block rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+              >
+                Request a review
+              </a>
+            </div>
+            <h2 className="mt-8 font-serif text-4xl font-bold tracking-tight text-foreground md:text-5xl text-balance">
+              Say hello
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              Bring us your knotty web problem. No judgment, no buzzwords.
-              Just a practical plan and people who love solving the messy stuff.
+              Small business? Side project? Just curious? Tell us a bit about what you need—we'll get back within a day.
             </p>
 
             <div className="mt-8 flex flex-col gap-5">
@@ -169,10 +136,7 @@ Thanks!`
             {/* Fun note */}
             <div className="mt-8 rounded-2xl border border-border bg-card p-5">
               <p className="font-serif text-lg font-bold text-foreground">
-                "The messier the knot, the bigger our smile."
-              </p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {"\u2014 The Untanglit Team, probably before their third coffee"}
+                No pressure. We're happy to point you in the right direction even if we're not the fit.
               </p>
             </div>
           </div>
@@ -192,7 +156,7 @@ Thanks!`
                 </p>
               </div>
             ) : (
-              <form noValidate onSubmit={handleSubmit} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name" className="text-sm font-medium text-foreground">
                     Name
@@ -207,132 +171,7 @@ Thanks!`
                     placeholder="Your name"
                   />
                   {formErrors.name && (
-                    <p className="text-xs font-serif text-primary">{formErrors.name}</p>
-                  )}
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="company" className="text-sm font-medium text-foreground">
-                    Company <span className="text-muted-foreground">(optional)</span>
-                  </label>
-                  <input
-                    id="company"
-                    type="text"
-                    value={formState.company}
-                    onChange={(e) => updateField("company", e.target.value)}
-                    className={fieldBaseClass}
-                    placeholder="Your company"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="companySize" className="text-sm font-medium text-foreground">
-                    Company size
-                    {formState.company.trim() && (
-                      <span className="text-muted-foreground"> (required if company is provided)</span>
-                    )}
-                  </label>
-                  <select
-                    id="companySize"
-                    required={formState.company.trim().length > 0}
-                    value={formState.companySize}
-                    onChange={(e) => updateField("companySize", e.target.value)}
-                    aria-invalid={Boolean(formErrors.companySize)}
-                    className={`${fieldBaseClass} ${formErrors.companySize ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                  >
-                    <option value="">Select size...</option>
-                    <option value="1-10">1-10</option>
-                    <option value="11-50">11-50</option>
-                    <option value="51-200">51-200</option>
-                    <option value="201-1000">201-1000</option>
-                    <option value="1000+">1000+</option>
-                  </select>
-                  {formErrors.companySize && (
-                    <p className="text-xs font-serif text-primary">{formErrors.companySize}</p>
-                  )}
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="projectType" className="text-sm font-medium text-foreground">
-                    Project type
-                  </label>
-                  <select
-                    id="projectType"
-                    value={formState.projectType}
-                    onChange={(e) => updateField("projectType", e.target.value)}
-                    aria-invalid={Boolean(formErrors.projectType)}
-                    className={`${fieldBaseClass} ${formErrors.projectType ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                  >
-                    <option value="">Select project type...</option>
-                    <option value="frontend-refactor">Frontend Refactor</option>
-                    <option value="new-build">New Build</option>
-                    <option value="design-system">Design System</option>
-                    <option value="performance">Performance Optimization</option>
-                    <option value="api-integration">API Integration</option>
-                    <option value="other">Something wonderfully weird</option>
-                  </select>
-                  {formErrors.projectType && (
-                    <p className="text-xs font-serif text-primary">{formErrors.projectType}</p>
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-2 md:col-span-2 lg:col-span-2">
-                  <label htmlFor="currentStack" className="text-sm font-medium text-foreground">
-                    Current stack
-                  </label>
-                  <input
-                    id="currentStack"
-                    type="text"
-                    value={formState.currentStack}
-                    onChange={(e) => updateField("currentStack", e.target.value)}
-                    aria-invalid={Boolean(formErrors.currentStack)}
-                    className={`${fieldBaseClass} ${formErrors.currentStack ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                    placeholder="React, Next.js, Node, etc."
-                  />
-                  {formErrors.currentStack && (
-                    <p className="text-xs font-serif text-primary">{formErrors.currentStack}</p>
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="timeline" className="text-sm font-medium text-foreground">
-                    Timeline
-                  </label>
-                  <select
-                    id="timeline"
-                    value={formState.timeline}
-                    onChange={(e) => updateField("timeline", e.target.value)}
-                    aria-invalid={Boolean(formErrors.timeline)}
-                    className={`${fieldBaseClass} ${formErrors.timeline ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                  >
-                    <option value="">Select timeline...</option>
-                    <option value="asap">ASAP</option>
-                    <option value="1-2-months">1-2 months</option>
-                    <option value="3-6-months">3-6 months</option>
-                    <option value="6+-months">6+ months</option>
-                  </select>
-                  {formErrors.timeline && (
-                    <p className="text-xs font-serif text-primary">{formErrors.timeline}</p>
-                  )}
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="budget" className="text-sm font-medium text-foreground">
-                    Budget
-                  </label>
-                  <select
-                    id="budget"
-                    value={formState.budget}
-                    onChange={(e) => updateField("budget", e.target.value)}
-                    aria-invalid={Boolean(formErrors.budget)}
-                    className={`${fieldBaseClass} ${formErrors.budget ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                  >
-                    <option value="">Select budget...</option>
-                    <option value="under-5k">Under $5k</option>
-                    <option value="5k-15k">$5k-$15k</option>
-                    <option value="15k-30k">$15k-$30k</option>
-                    <option value="30k+">$30k+</option>
-                    <option value="not-sure">Not sure yet</option>
-                  </select>
-                  {formErrors.budget && (
-                    <p className="text-xs font-serif text-primary">{formErrors.budget}</p>
+                    <p className="text-xs text-destructive">{formErrors.name}</p>
                   )}
                 </div>
 
@@ -347,83 +186,66 @@ Thanks!`
                     onChange={(e) => updateField("email", e.target.value)}
                     aria-invalid={Boolean(formErrors.email)}
                     className={`${fieldBaseClass} ${formErrors.email ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                    placeholder="you@company.com"
+                    placeholder="you@example.com"
                   />
                   {formErrors.email && (
-                    <p className="text-xs font-serif text-primary">{formErrors.email}</p>
+                    <p className="text-xs text-destructive">{formErrors.email}</p>
                   )}
                 </div>
+
                 <div className="flex flex-col gap-2">
                   <label htmlFor="phone" className="text-sm font-medium text-foreground">
-                    Phone number
+                    Phone <span className="text-muted-foreground font-normal">(optional)</span>
                   </label>
                   <input
                     id="phone"
                     type="tel"
                     value={formState.phone}
                     onChange={(e) => updateField("phone", e.target.value)}
-                    aria-invalid={Boolean(formErrors.phone)}
-                    className={`${fieldBaseClass} ${formErrors.phone ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                    placeholder="(123) 456-7890"
+                    className={fieldBaseClass}
+                    placeholder="(555) 123-4567"
                   />
-                  {formErrors.phone && (
-                    <p className="text-xs font-serif text-primary">{formErrors.phone}</p>
-                  )}
                 </div>
 
-                <div className="flex flex-col gap-2 md:col-span-2 lg:col-span-2">
-                  <label htmlFor="bestContact" className="text-sm font-medium text-foreground">
-                    Best way to contact
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="interest" className="text-sm font-medium text-foreground">
+                    What are you looking for? <span className="text-muted-foreground font-normal">(optional)</span>
                   </label>
                   <select
-                    id="bestContact"
-                    value={formState.bestContact}
-                    onChange={(e) => updateField("bestContact", e.target.value)}
-                    aria-invalid={Boolean(formErrors.bestContact)}
-                    className={`${fieldBaseClass} ${formErrors.bestContact ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
+                    id="interest"
+                    value={formState.interest}
+                    onChange={(e) => updateField("interest", e.target.value)}
+                    className={fieldBaseClass}
                   >
-                    <option value="">Select preferred contact...</option>
-                    <option value="email">Email</option>
-                    <option value="text">Text message</option>
+                    <option value="">Select one if helpful...</option>
+                    <option value="Free 15-min site review">Free 15-minute site review</option>
+                    <option value="Monthly retainer ($199/mo)">Monthly retainer ($199/mo)</option>
+                    <option value="One-time project">One-time project</option>
+                    <option value="Just exploring">Just exploring</option>
                   </select>
-                  {formErrors.bestContact && (
-                    <p className="text-xs font-serif text-primary">{formErrors.bestContact}</p>
-                  )}
                 </div>
 
-                <div className="flex flex-col gap-2 md:col-span-2 lg:col-span-3">
+                <div className="flex flex-col gap-2">
                   <label htmlFor="message" className="text-sm font-medium text-foreground">
-                    Describe the knot
+                    What's on your mind? <span className="text-muted-foreground font-normal">(optional)</span>
                   </label>
                   <textarea
                     id="message"
-                    rows={4}
+                    rows={3}
                     value={formState.message}
                     onChange={(e) => updateField("message", e.target.value)}
-                    aria-invalid={Boolean(formErrors.message)}
-                    className={`resize-none ${fieldBaseClass} ${formErrors.message ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                    placeholder="Tell us where things feel tangled, what is breaking, and what success looks like."
+                    className={`resize-none ${fieldBaseClass}`}
+                    placeholder="A few words about your project or question is plenty."
                   />
-                  {formErrors.message && (
-                    <p className="text-xs font-serif text-primary">{formErrors.message}</p>
-                  )}
                 </div>
 
-                <div className="mt-6 flex items-center gap-3 md:col-span-2 lg:col-span-3">
-                  {formState.timeline === "asap" && (
-                    <p className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg border border-primary/30 bg-primary/10 px-3 py-2 text-xs text-foreground">
-                      <AlertTriangle size={14} className="shrink-0" />
-                      ASAP requests may include rush charges.
-                    </p>
-                  )}
-                  <button
-                    type="submit"
-                    className="ml-auto inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover hover:scale-105"
-                  >
-                    <Send size={16} />
-                    Get a quote to Untanglit
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+                >
+                  <Send size={16} />
+                  Send message
+                </button>
               </form>
             )}
           </div>

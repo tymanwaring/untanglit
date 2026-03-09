@@ -1,7 +1,7 @@
 "use client"
 
-import { ArrowDown } from "lucide-react"
 import { SectionDecorations } from "@/components/section-decorations"
+import { siteReviewMailto } from "@/lib/data"
 
 interface HeroProps {
   onOpenWizard?: () => void
@@ -88,18 +88,15 @@ export function Hero({ onOpenWizard }: HeroProps) {
             See Our Work
           </a>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-14 left-1/2 z-20 -translate-x-1/2 animate-float">
-        <a
-          href="#services"
-          className="flex flex-col items-center gap-2 text-muted-foreground transition-colors hover:text-primary"
-          aria-label="Scroll to services"
-        >
-          <span className="text-xs font-medium uppercase tracking-widest">Scroll</span>
-          <ArrowDown size={18} />
-        </a>
+        <p className="mt-6 text-center">
+          <a
+            href={siteReviewMailto}
+            className="text-sm font-medium text-muted-foreground underline decoration-primary/50 underline-offset-2 transition-colors hover:text-primary"
+          >
+            Schedule a free 15-minute site review
+          </a>
+          <span className="mt-1 block text-xs text-muted-foreground">No commitment—just honest advice.</span>
+        </p>
       </div>
 
       {/* Marquee ticker */}
