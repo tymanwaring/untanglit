@@ -28,7 +28,7 @@ export const examples = [
     name: "Auto Shop",
     description: "Auto repair and maintenance with services, hours, location, and book appointment.",
     href: "/templates/auto-shop",
-    preview: "/images/templates/auto-shop/home.webp",
+    preview: "/images/templates/auto-shop/homepage-preview.webp",
     previewAlt: "Auto shop example homepage",
   },
 ] as const
