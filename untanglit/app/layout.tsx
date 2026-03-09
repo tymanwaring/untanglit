@@ -15,6 +15,10 @@ const fraunces = Fraunces({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ??
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+  ),
   title: 'Untanglit | We Untangle Your Web Problems',
   description: 'Untanglit is a quirky web consulting agency that specializes in resolving complex web problems. We turn your tangled mess into a clean, beautiful solution.',
   icons: {

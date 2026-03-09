@@ -1,0 +1,24 @@
+/* Restaurant template theme – warm diner feel; Tailwind from root layout */
+:root {
+  --color-primary: #8b4513;
+  --color-primary-dark: #6d3410;
+  --color-dark: #1a1a1a;
+  --color-bg: #faf6f1;
+  --color-bg-alt: #f5f0e8;
+  --color-footer: #2c1810;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  @apply transition-colors duration-150;
+}
+input:focus,
+textarea:focus {
+  @apply outline-none ring-2 ring-[var(--color-primary)]/20 border-[var(--color-primary)];
+}

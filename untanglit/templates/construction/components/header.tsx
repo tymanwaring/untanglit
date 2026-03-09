@@ -8,7 +8,7 @@ const BASE = '/templates/construction'
 function Logo() {
   return (
     <Link href={BASE} className="flex items-center gap-2.5">
-      <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-[var(--color-primary)] flex items-center justify-center" aria-hidden>
+      <span className="flex-shrink-0 w-9 h-9 rounded-md bg-[var(--color-primary)] flex items-center justify-center" aria-hidden>
         <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
           <polyline points="9 22 9 12 15 12 15 22" />
@@ -42,7 +42,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+    <header className="sticky top-0 z-50 bg-white border-b-2 border-gray-200 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Logo />
