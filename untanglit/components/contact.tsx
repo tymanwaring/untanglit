@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Send, Mail, MapPin, Phone } from "lucide-react"
 import { SectionDecorations } from "@/components/section-decorations"
 import { siteReviewMailto } from "@/lib/data"
@@ -22,6 +22,10 @@ const initialFormState: ContactFormState = {
   interest: "",
   message: "",
 }
+
+const CONTACT_PREFILL_EVENT = "contact-prefill"
+
+export type ContactPrefillDetail = { interest: string; message: string }
 
 const fieldBaseClass =
   "rounded-xl border border-input bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -65,6 +69,22 @@ export function Contact() {
   const [formErrors, setFormErrors] = useState<ContactFormErrors>({})
   const [submitted, setSubmitted] = useState(false)
   const [showDraftReminder, setShowDraftReminder] = useState(false)
+  const [showPrefillNudge, setShowPrefillNudge] = useState(false)
+
+  useEffect(() => {
+    const handlePrefill = (e: CustomEvent<ContactPrefillDetail>) => {
+      const { interest, message } = e.detail
+      setFormState((prev) => ({
+        ...prev,
+        ...(interest && { interest }),
+        ...(message && { message }),
+      }))
+      setShowPrefillNudge(true)
+    }
+    window.addEventListener(CONTACT_PREFILL_EVENT, handlePrefill as EventListener)
+    return () =>
+      window.removeEventListener(CONTACT_PREFILL_EVENT, handlePrefill as EventListener)
+  }, [])
 
   function updateField<K extends keyof ContactFormState>(field: K, value: string) {
     setFormState((prev) => ({ ...prev, [field]: value }))
@@ -91,6 +111,7 @@ export function Contact() {
     setSubmitted(true)
     setFormErrors({})
     setFormState(initialFormState)
+    setShowPrefillNudge(false)
     window.location.href = mailtoHref
     setShowDraftReminder(true)
     setTimeout(() => setSubmitted(false), 4000)
@@ -143,6 +164,11 @@ export function Contact() {
 
           {/* Right column - Form */}
           <div className="rounded-2xl border border-border bg-card p-8 shadow-sm md:p-10">
+            {showPrefillNudge && (
+              <p className="mb-5 rounded-xl bg-secondary/10 px-4 py-3 text-sm text-foreground">
+                Fill in your name, email, and phone below to get your quote.
+              </p>
+            )}
             {submitted ? (
               <div className="flex h-full flex-col items-center justify-center py-12 text-center">
                 <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10">
@@ -220,7 +246,10 @@ export function Contact() {
                     <option value="">Select one if helpful...</option>
                     <option value="Free 15-min site review">Free 15-minute site review</option>
                     <option value="Monthly retainer ($99/mo)">Monthly retainer ($99/mo)</option>
-                    <option value="One-time project">One-time project</option>
+                    <option value="One-time build: 1–3 Pages — ~$2,000 one-time">One-time build: 1–3 Pages — ~$2,000</option>
+                    <option value="One-time build: 4–9 Pages — ~$8,500 one-time">One-time build: 4–9 Pages — ~$8,500</option>
+                    <option value="One-time build: 10+ Pages — ~$19,500 one-time">One-time build: 10+ Pages — ~$19,500</option>
+                    <option value="One-time project (other)">One-time project (other)</option>
                     <option value="Just exploring">Just exploring</option>
                   </select>
                 </div>
