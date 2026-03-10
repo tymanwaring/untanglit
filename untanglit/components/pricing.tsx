@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Repeat, FileText } from "lucide-react"
 import Link from "next/link"
 import { monthlyPlan, yearlyPlan, pagePackages, planFinderWizard, siteReviewMailto } from "@/lib/data"
+import { createSubscriptionCheckout } from "@/app/actions/stripe"
 import { SectionDecorations } from "@/components/section-decorations"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -150,10 +151,27 @@ export function Pricing({ wizardOpen, wizardOnOpenChange }: PricingProps = {}) {
 type RetainerPlan = typeof monthlyPlan | typeof yearlyPlan
 
 function RetainerCard({ plan, isYearly }: { plan: RetainerPlan; isYearly?: boolean }) {
-  const ctaHref = "#contact"
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
   const ctaLabel = isYearly
     ? `Get the ${formatPrice(plan.price)}/year plan`
     : "Get the $99/month plan"
+
+  const handleCheckout = async () => {
+    setError(null)
+    setLoading(true)
+    try {
+      const result = await createSubscriptionCheckout(isYearly ? "yearly" : "monthly")
+      if (result.url) {
+        window.location.href = result.url
+        return
+      }
+      setError(result.error ?? "Something went wrong.")
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="group relative rounded-2xl border-2 border-primary/30 bg-card p-8 shadow-lg transition-all hover:border-primary/50 hover:shadow-xl md:p-10">
@@ -196,10 +214,23 @@ function RetainerCard({ plan, isYearly }: { plan: RetainerPlan; isYearly?: boole
             </li>
           ))}
         </ul>
-        <div className="mt-10">
-          <Button asChild size="lg" className="min-w-[200px]">
-            <Link href={ctaHref}>{ctaLabel}</Link>
+        <div className="mt-10 flex flex-col items-center gap-2">
+          <Button
+            size="lg"
+            className="min-w-[200px]"
+            onClick={handleCheckout}
+            disabled={loading}
+          >
+            {loading ? "Taking you to checkout…" : ctaLabel}
           </Button>
+          {error && (
+            <p className="text-sm text-destructive">
+              {error}{" "}
+              <Link href="#contact" className="underline">
+                Contact us
+              </Link>
+            </p>
+          )}
         </div>
       </div>
 
@@ -250,7 +281,7 @@ function PagePackageCard({
       </h4>
       <div className="mt-3 flex items-baseline gap-1">
         <span className="text-2xl font-bold tabular-nums text-foreground">
-          {formatPrice(price)}
+          ~{formatPrice(price)}
         </span>
         <span className="text-sm text-muted-foreground">one-time</span>
       </div>
@@ -269,7 +300,23 @@ function PagePackageCard({
       </ul>
       <div className="mt-6 pt-2">
         <Button asChild variant="outline" size="sm" className="w-full">
-          <Link href="#contact">Get a quote</Link>
+          <Link
+            href="#contact"
+            onClick={() => {
+              window.dispatchEvent(
+                new CustomEvent("contact-prefill", {
+                  detail: {
+                    interest: `One-time build: ${name} — ~${formatPrice(price)} one-time`,
+                    message:
+                      "I'd like to discuss the scope and get a quote for this package.",
+                  },
+                })
+              )
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+            }}
+          >
+            Get a quote
+          </Link>
         </Button>
       </div>
 
