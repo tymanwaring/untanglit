@@ -7,9 +7,9 @@ const cases = [
     title: "Coastal Aquiring",
     link: "https://portal.coastalacquiring.com/login?step=signIn",
     before:
-      "A fast-growing product with tangled systems, too many moving parts, and shipping friction.",
+      "Pages were taking 10–12 seconds to load. Users were waiting forever and leaving before anything showed up.",
     after:
-      "We rebuilt key flows end to end, unified the stack, sharpened delivery pipelines, and turned a complex platform into something faster, cleaner, and easier to scale.",
+      "We got key screens and flows down to under a second. Responses are quick, and the platform feels snappy.",
     metric: "From Friction to Flow",
     color: "border-primary/30 hover:border-primary",
     accentColor: "text-primary bg-primary/10",
@@ -19,9 +19,9 @@ const cases = [
     title: "Grublify",
     link: "https://www.grublify.com/",
     before:
-      "A large, tangled codebase was slowing delivery, with duplicated logic across storefront, admin, and backend services.",
+      "Poor SEO meant they barely showed up in search. The site was a constant worry instead of something that worked for them.",
     after:
-      "We simplified the architecture, consolidated shared flows, and cleaned up core modules without cutting product capability, so teams kept every key feature while shipping faster.",
+      "We fixed the foundations so they rank better and the site runs smoothly. Now they can focus on what they love most—not on worrying about the website.",
     metric: "Feature Complete",
     color: "border-secondary/30 hover:border-secondary",
     accentColor: "text-secondary bg-secondary/10",
@@ -31,9 +31,9 @@ const cases = [
     title: "FM Flow",
     link: "https://fmflow.com/",
     before:
-      "A growing product with legacy UI patterns, uneven component quality, and a monorepo that was hard to scale cleanly.",
+      "The site was slow and images often didn’t load. Visitors were left staring at broken placeholders instead of seeing the content.",
     after:
-      "We introduced Next.js and Nx to better structure the monorepo, organize shared code, and improve load performance, while modernizing core frontend/backend workflows so the team shipped faster with more consistency.",
+      "We fixed the bottlenecks and got images loading properly. The site now feels smooth and reliable.",
     metric: "Organized and Fast",
     color: "border-accent/30 hover:border-accent",
     accentColor: "text-accent-foreground bg-accent/10",

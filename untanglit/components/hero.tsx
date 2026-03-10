@@ -10,14 +10,14 @@ interface HeroProps {
 export function Hero({ onOpenWizard }: HeroProps) {
   const tickerItems = Array.from({ length: 8 }, () => "Untanglit")
   const bandItems = [
-    "Code Detangling",
-    "Architecture Unraveling",
-    "Performance Untying",
-    "UX Unknotting",
-    "API & Data Stitching",
-    "SEO Straightening",
-    "Design System Weaving",
-    "Migration Smoothing",
+    "Copy & Text Updates",
+    "Image & Photo Swaps",
+    "Quick Fixes & Tweaks",
+    "Menu & Info Updates",
+    "Hours & Contact Updates",
+    "Content Refreshes",
+    "Listing & SEO Tweaks",
+    "Small Site Updates",
   ]
 
   return (
@@ -60,8 +60,7 @@ export function Hero({ onOpenWizard }: HeroProps) {
         </h1>
 
         <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-          Tangled code? Knotted architecture? Spaghetti integrations?
-          We specialize in turning your digital chaos into clean, elegant solutions that actually work.
+          We help small businesses stay online without the big-agency price tag. From $99/month minimal updates to one-time site builds—quantity and affordability, so you can focus on running your business.
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

@@ -7,28 +7,28 @@ const steps = [
     icon: Search,
     title: "Find the Knot",
     description:
-      "We start by tracing the tangle. Audits, code reviews, and team interviews reveal what's really tied together.",
+      "We look at your site and talk with you about your goals. We find what’s broken, what’s confusing, and what you want to improve—no jargon, just a clear picture.",
   },
   {
     number: "02",
     icon: Scissors,
     title: "Untanglit with Care",
     description:
-      "No wild cutting. We choose the smartest order of operations so each fix makes the next one easier.",
+      "We don’t rush or cut corners. We tackle things in an order that makes sense so nothing breaks and each change makes the next one easier.",
   },
   {
     number: "03",
     icon: Sparkles,
     title: "Smooth the Strands",
     description:
-      "Once untangled, we refine. Clean code, clear documentation, optimized performance, and beautiful interfaces.",
+      "We clean everything up so your site looks good, loads fast, and works well on phones and desktops. You get something you’re proud to show customers.",
   },
   {
     number: "04",
     icon: Rocket,
     title: "Launch Untangled",
     description:
-      "You launch with confidence, plus docs and handoff support so your team keeps things beautifully untangled.",
+      "Your site goes live when you’re ready. We give you simple instructions so you—or we, on your plan—can update it whenever you need to.",
   },
 ]
 

@@ -52,20 +52,21 @@ export function AboutSection() {
         <SpringReveal delay={0.1}>
           <div className="flex flex-col gap-6 text-base leading-relaxed text-muted-foreground">
             <p>
-              Untanglit exists for teams that feel blocked by unclear requirements,
-              fragile front-end code, or delivery chaos. We bring senior
-              engineering leadership and a calm, structured process that removes
-              guesswork from product delivery.
+              Untanglit is built for small businesses. We serve many clients with
+              lightweight, affordable support—minimal updates, copy tweaks, small
+              fixes, and straightforward site builds—so you get steady help without
+              enterprise budgets or long-term lock-in.
             </p>
             <p>
-              We do not just write components -- we reduce risk. Our work focuses
-              on architecture clarity, measurable performance, and accessible user
-              flows your team can maintain long after launch.
+              Our focus is quantity and reach: we'd rather help lots of small
+              businesses stay online with predictable, low-cost updates than a
+              handful of deep custom projects. You get what you need; we keep it
+              simple and scalable.
             </p>
             <p>
-              From enterprise dashboards to startup launches, we help clients ship
-              with confidence through practical planning, transparent communication,
-              and consistent execution.
+              Whether you need a $99/month plan for ongoing minimal updates or a
+              one-time build by page count, we keep pricing clear and commitments
+              flexible so you can grow at your own pace.
             </p>
           </div>
         </SpringReveal>
