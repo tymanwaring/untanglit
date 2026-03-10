@@ -60,7 +60,7 @@ export function Hero({ onOpenWizard }: HeroProps) {
         </h1>
 
         <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-          We help small businesses stay online without the big-agency price tag. From $99/month minimal updates to one-time site builds—quantity and affordability, so you can focus on running your business.
+          We help small businesses stay online without the big-agency price tag. From just $99/month we take care of your site, so you can focus on running your business.
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
