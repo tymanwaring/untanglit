@@ -47,6 +47,7 @@ export async function createSubscriptionCheckout(
       success_url: `${baseUrl}/?checkout=success`,
       cancel_url: `${baseUrl}/#pricing`,
       allow_promotion_codes: true,
+      phone_number_collection: { enabled: true },
     })
 
     if (!session.url) {
