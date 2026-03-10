@@ -1,10 +1,12 @@
 "use client"
 
+import { useState } from "react"
 import { Repeat, FileText } from "lucide-react"
 import Link from "next/link"
-import { monthlyPlan, pagePackages, planFinderWizard, siteReviewMailto } from "@/lib/data"
+import { monthlyPlan, yearlyPlan, pagePackages, planFinderWizard, siteReviewMailto } from "@/lib/data"
 import { SectionDecorations } from "@/components/section-decorations"
 import { Button } from "@/components/ui/button"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PlanFinderWizard } from "@/components/plan-finder-wizard"
 
 const knotVariants = [
@@ -29,6 +31,7 @@ interface PricingProps {
 
 export function Pricing({ wizardOpen, wizardOnOpenChange }: PricingProps = {}) {
   const isWizardControlled = wizardOpen !== undefined && wizardOnOpenChange !== undefined
+  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("monthly")
 
   return (
     <section id="pricing" className="relative overflow-hidden py-24 md:py-32">
@@ -39,28 +42,48 @@ export function Pricing({ wizardOpen, wizardOnOpenChange }: PricingProps = {}) {
             Pricing
           </span>
           <h2 className="mt-4 font-serif text-4xl font-bold tracking-tight text-foreground md:text-5xl text-balance">
-            Monthly retainer or a one-time build.{" "}
+            Ongoing support or one-time build.{" "}
             <span className="text-muted-foreground">
               You know exactly what you're paying for.
             </span>
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Prefer ongoing capacity? Retainer. Prefer a fixed scope? Pick by page count.
+            Need light, affordable updates every month? Our small-business plan. Need a new site or a bigger project? Pick by page count.
           </p>
         </div>
 
-        {/* Emphasized monthly retainer */}
-        <div className="mt-16">
-          <RetainerCard />
+        {/* Billing period tabs + single Small Business Plan card */}
+        <div className="mt-16 mx-auto max-w-2xl">
+          <Tabs
+            value={billingPeriod}
+            onValueChange={(v) => setBillingPeriod(v as "monthly" | "yearly")}
+            defaultValue="monthly"
+          >
+            <TabsList className="mb-8 mx-auto flex w-fit h-11 rounded-full bg-muted p-1">
+              <TabsTrigger value="monthly" className="rounded-full px-6 data-[state=active]:shadow-sm">
+                Monthly
+              </TabsTrigger>
+              <TabsTrigger value="yearly" className="rounded-full px-6 gap-1.5">
+                Yearly
+                <span className="rounded-full bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">
+                  Save $198
+                </span>
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <RetainerCard
+            plan={billingPeriod === "yearly" ? yearlyPlan : monthlyPlan}
+            isYearly={billingPeriod === "yearly"}
+          />
         </div>
 
         {/* One-time build by page count */}
         <div className="mt-20">
           <p className="mb-8 text-center text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-            Or a one-time build
+            Or a one-time site build
           </p>
           <p className="mb-10 text-center text-muted-foreground">
-            Fixed price by number of pages. No guesswork.
+            Fixed price by number of pages—perfect for small businesses. You know the cost up front.
           </p>
           <div className="grid gap-6 md:grid-cols-3">
             {pagePackages.map((pkg, index) => (
@@ -84,8 +107,8 @@ export function Pricing({ wizardOpen, wizardOnOpenChange }: PricingProps = {}) {
               Not sure what you're looking for?
             </h3>
             <p className="mt-3 text-muted-foreground">
-              We can help find the plan that's right for you. Answer a few quick
-              questions and we'll recommend your best fit.
+              We're geared toward small businesses. Answer a few quick questions
+              and we'll recommend the right plan—$99/month with minimal updates or a one-time build.
             </p>
           </div>
           <div className="mt-10">
@@ -124,12 +147,19 @@ export function Pricing({ wizardOpen, wizardOnOpenChange }: PricingProps = {}) {
   )
 }
 
-function RetainerCard() {
+type RetainerPlan = typeof monthlyPlan | typeof yearlyPlan
+
+function RetainerCard({ plan, isYearly }: { plan: RetainerPlan; isYearly?: boolean }) {
+  const ctaHref = "#contact"
+  const ctaLabel = isYearly
+    ? `Get the ${formatPrice(plan.price)}/year plan`
+    : "Get the $99/month plan"
+
   return (
-    <div className="group relative mx-auto max-w-2xl rounded-2xl border-2 border-primary/30 bg-card p-8 shadow-lg transition-all hover:border-primary/50 hover:shadow-xl md:p-10">
+    <div className="group relative rounded-2xl border-2 border-primary/30 bg-card p-8 shadow-lg transition-all hover:border-primary/50 hover:shadow-xl md:p-10">
       <div className="absolute -top-3 left-1/2 -translate-x-1/2">
         <span className="rounded-full border border-primary/30 bg-background px-4 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
-          Most flexible
+          {isYearly ? yearlyPlan.savingsLabel : "Best for small business"}
         </span>
       </div>
 
@@ -138,21 +168,26 @@ function RetainerCard() {
           <Repeat size={28} />
         </div>
         <h3 className="font-serif text-2xl font-bold text-card-foreground md:text-3xl">
-          {monthlyPlan.name}
+          {plan.name}
         </h3>
-        <div className="mt-3 flex items-baseline gap-1">
+        <div className="mt-3 flex flex-wrap items-baseline justify-center gap-1">
           <span className="text-4xl font-bold tabular-nums text-foreground md:text-5xl">
-            {formatPrice(monthlyPlan.price)}
+            {formatPrice(plan.price)}
           </span>
           <span className="text-lg text-muted-foreground">
-            /{monthlyPlan.period}
+            /{plan.period}
           </span>
+          {isYearly && (
+            <span className="w-full text-sm text-muted-foreground">
+              ({formatPrice(yearlyPlan.equivalentPerMonth)}/month)
+            </span>
+          )}
         </div>
         <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-          {monthlyPlan.description}
+          {plan.description}
         </p>
         <ul className="mt-8 grid gap-3 text-left text-sm text-muted-foreground sm:grid-cols-2 sm:gap-x-8">
-          {monthlyPlan.features.map((feature, i) => (
+          {plan.features.map((feature, i) => (
             <li key={i} className="flex gap-2">
               <span className="text-primary" aria-hidden>
                 —
@@ -163,7 +198,7 @@ function RetainerCard() {
         </ul>
         <div className="mt-10">
           <Button asChild size="lg" className="min-w-[200px]">
-            <Link href="#contact">Discuss retainer</Link>
+            <Link href={ctaHref}>{ctaLabel}</Link>
           </Button>
         </div>
       </div>

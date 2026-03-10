@@ -219,7 +219,7 @@ export function Contact() {
                   >
                     <option value="">Select one if helpful...</option>
                     <option value="Free 15-min site review">Free 15-minute site review</option>
-                    <option value="Monthly retainer ($199/mo)">Monthly retainer ($199/mo)</option>
+                    <option value="Monthly retainer ($99/mo)">Monthly retainer ($99/mo)</option>
                     <option value="One-time project">One-time project</option>
                     <option value="Just exploring">Just exploring</option>
                   </select>

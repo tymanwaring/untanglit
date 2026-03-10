@@ -253,32 +253,44 @@ export const technologies = [
   "Vercel",
 ] as const
 
-// Pricing: small-business friendly retainer; projects by page count
+// Pricing: small-business focused — $99/month for minimal updates (quantity over quality)
 export const monthlyPlan = {
-  name: "Monthly Retainer",
-  price: 199,
+  name: "Small Business Plan",
+  price: 99,
   period: "month",
   description:
-    "Ongoing front-end support for small businesses. Request work as you go—updates, new pages, or small features. No project lock-in; pause or scale when you need to.",
+    "All included—no hidden fees. Built for small businesses that need a steady stream of lightweight updates: copy tweaks, image swaps, small fixes, and minor changes. We serve many clients with minimal, predictable updates so you stay online without breaking the bank.",
   features: [
-    "Priority queue for your requests",
-    "Up to 10 hours/month front-end development",
-    "Code reviews and best-practice guidance",
-    "Pause or cancel anytime—no long-term contract",
+    "All included—minimal updates as needed (copy, images, small fixes)",
+    "Simple request queue; we batch work across many small-business clients",
+    "No long-term contract—pause or cancel anytime",
+    "Ideal when you need volume of small changes, not deep custom builds",
   ],
 } as const
 
-// One-time builds by page count so it's clear what you're paying for
+// Yearly plan: pay upfront, get a discount (e.g. 2 months free)
+const monthlyTotalPerYear = monthlyPlan.price * 12
+export const yearlyPlan = {
+  name: "Small Business Plan",
+  price: 990, // 2 months free vs monthly
+  period: "year",
+  description: monthlyPlan.description,
+  features: monthlyPlan.features,
+  savingsLabel: `Save $${monthlyTotalPerYear - 990} (2 months free)`,
+  equivalentPerMonth: 83, // 990 / 12, rounded
+} as const
+
+// One-time builds by page count — small-business focused
 export const pagePackages = [
   {
     name: "1–3 Pages",
     pageRange: "1–3 pages",
-    price: 3500,
-    description: "One flat fee for a small site: landing page, micro-site, or a few key pages. Design-to-code, responsive, and fast.",
+    price: 2000,
+    description: "Get your small business online with a simple site: homepage, about, contact, or a few key pages. Mobile-friendly and easy for customers to find you.",
     features: [
-      "Fully responsive, accessible build",
-      "SEO basics and performance tuning",
-      "Handoff and light documentation",
+      "Mobile-friendly, looks great on any device",
+      "Basic SEO so you show up in local search",
+      "Simple handoff—you own it, we show you the basics",
       "Rush delivery available — we'll confirm timeline and surcharge in your quote",
     ],
   },
@@ -286,11 +298,11 @@ export const pagePackages = [
     name: "4–9 Pages",
     pageRange: "4–9 pages",
     price: 8500,
-    description: "Multi-page marketing site or app shell. Reusable components and clear structure so you can extend it later.",
+    description: "A proper small-business site: services, team, testimonials, or a small catalog. Clear structure so you can add more later without starting over.",
     features: [
-      "Reusable component system",
-      "Forms or simple API integration",
-      "Design system foundations",
+      "Multiple sections (services, team, gallery, etc.)",
+      "Contact form or simple booking hookup",
+      "Consistent look and feel across all pages",
       "Rush delivery available — we'll confirm timeline and surcharge in your quote",
     ],
   },
@@ -298,11 +310,11 @@ export const pagePackages = [
     name: "10+ Pages",
     pageRange: "10+ pages",
     price: 19500,
-    description: "Larger site or app: full product front-end, design system, or many content pages. Built to last and scale.",
+    description: "A bigger small-business presence: full site, many pages, or a simple online storefront. Built so you can grow without rebuilding.",
     features: [
-      "Full design system or app front-end",
-      "Performance and a11y audits",
-      "Team handoff and documentation",
+      "Larger site or simple e‑commerce front",
+      "Fast load times and easy to maintain",
+      "Handoff and docs so you or your team can update it",
       "Rush delivery available — we'll confirm timeline and surcharge in your quote",
     ],
   },
@@ -315,7 +327,7 @@ export const planFinderWizard = {
   intro: {
     headline: "Not sure what you're looking for?",
     subline:
-      "We can help find the plan that's right for you. Answer a few quick questions and we'll recommend your best fit.",
+      "We focus on small businesses. Answer a few quick questions and we'll recommend the right plan—whether that's our $99/month minimal-updates plan or a one-time build.",
     timeEstimate: "Takes about 1 minute",
     cta: "Start the plan finder",
   },
@@ -326,8 +338,8 @@ export const planFinderWizard = {
       options: [
         {
           id: "ongoing",
-          label: "Ongoing front-end support",
-          description: "I want a dedicated team or capacity I can tap month to month.",
+          label: "Ongoing minimal updates",
+          description: "I'm a small business and need light, affordable updates month to month.",
           recommendation: "retainer" as WizardRecommendation,
           nextStep: "timeline",
         },

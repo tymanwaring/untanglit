@@ -1,47 +1,47 @@
-import { Code, Layers, Zap, Palette, Database, BarChart3 } from "lucide-react"
+import { FileText, Image, Wrench, List, Clock, Search } from "lucide-react"
 import { SectionDecorations } from "@/components/section-decorations"
 
 const services = [
   {
-    icon: Code,
-    title: "Code Detangling",
+    icon: FileText,
+    title: "Copy & Text Updates",
     description:
-      "Legacy spaghetti code? We refactor, restructure, and modernize your codebase until it sings.",
+      "Need to change wording, fix typos, or update headlines and paragraphs? We keep your message clear and current.",
     color: "bg-primary/10 text-primary",
   },
   {
-    icon: Layers,
-    title: "Architecture Unraveling",
+    icon: Image,
+    title: "Image & Photo Swaps",
     description:
-      "We map the maze, simplify the structure, and leave you with an architecture that can grow up gracefully.",
+      "New photos, updated graphics, or fresh menu and product images. We swap them in so your site always looks up to date.",
     color: "bg-secondary/10 text-secondary",
   },
   {
-    icon: Zap,
-    title: "Load-Time Loosening",
+    icon: Wrench,
+    title: "Quick Fixes & Tweaks",
     description:
-      "Slow load times tying you down? We diagnose bottlenecks and unleash blazing-fast performance.",
+      "Broken links, small layout fixes, or button and form tweaks. We handle the little things so your site works smoothly.",
     color: "bg-accent/10 text-accent-foreground",
   },
   {
-    icon: Palette,
-    title: "UX Unknotting",
+    icon: List,
+    title: "Menu & Info Updates",
     description:
-      "Confusing user flows? We unravel the knots in your UX and create journeys that feel effortless.",
+      "Keep your menu, services, or product list current. We update the details so customers always see the right info.",
     color: "bg-primary/10 text-primary",
   },
   {
-    icon: Database,
-    title: "API & Data Stitching",
+    icon: Clock,
+    title: "Hours & Contact Updates",
     description:
-      "Need backend support too? We stitch APIs and data flows cleanly so your frontend stays fast, stable, and easy to build on.",
+      "New hours, address, phone number, or contact form? We make sure visitors can find you and reach you.",
     color: "bg-secondary/10 text-secondary",
   },
   {
-    icon: BarChart3,
-    title: "SEO Straightening",
+    icon: Search,
+    title: "SEO & Listings",
     description:
-      "Rankings in a twist? We untangle your SEO, fix technical issues, and boost your visibility.",
+      "Get found when customers search. We help with basic SEO and listing updates so you show up where it matters.",
     color: "bg-accent/10 text-accent-foreground",
   },
 ]
@@ -66,11 +66,11 @@ export function Services() {
             What We Untangle
           </span>
           <h2 className="mt-4 font-serif text-4xl font-bold tracking-tight text-foreground md:text-5xl text-balance">
-            Every knot has a plan.{" "}
-            <span className="text-muted-foreground">We bring the patient hands.</span>
+            The updates small businesses need.{" "}
+            <span className="text-muted-foreground">No jargon, no surprises.</span>
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Frontend-first and performance-obsessed, we untangle messy UI codebases and support the backend touchpoints needed to keep everything humming.
+            From copy and photos to hours and contact info, we handle the everyday changes that keep your site accurate and easy to find—all included in your plan.
           </p>
         </div>
 
