@@ -175,8 +175,8 @@ function RetainerCard({ plan, isYearly }: { plan: RetainerPlan; isYearly?: boole
 
   return (
     <div className="group relative rounded-2xl border-2 border-primary/30 bg-card p-8 shadow-lg transition-all hover:border-primary/50 hover:shadow-xl md:p-10">
-      <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-        <span className="rounded-full border border-primary/30 bg-background px-4 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
+      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-1">
+        <span className="inline-block whitespace-nowrap rounded-full border border-primary/30 bg-background px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary sm:px-4 sm:text-xs">
           {isYearly ? yearlyPlan.savingsLabel : "Best for small business"}
         </span>
       </div>
