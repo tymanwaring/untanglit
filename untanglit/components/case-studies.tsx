@@ -3,7 +3,7 @@ import { SectionDecorations } from "@/components/section-decorations"
 
 const cases = [
   {
-    tag: "Fintech",
+    tag: "Spots",
     title: "Recharge Energy",
     link: "https://portal.coastalacquiring.com/login?step=signIn",
     before:
