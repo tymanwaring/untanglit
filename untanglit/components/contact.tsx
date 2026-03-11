@@ -1,121 +1,18 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Send, Mail, MapPin, Phone } from "lucide-react"
+import { Mail, MapPin, Phone } from "lucide-react"
 import { SectionDecorations } from "@/components/section-decorations"
-import { siteReviewMailto } from "@/lib/data"
+import { ContactForm } from "./contact-form"
 
-type ContactFormState = {
-  name: string
-  email: string
-  phone: string
-  interest: string
-  message: string
-}
-
-type ContactFormErrors = Partial<Record<keyof ContactFormState, string>>
-
-const initialFormState: ContactFormState = {
-  name: "",
-  email: "",
-  phone: "",
-  interest: "",
-  message: "",
-}
-
-const CONTACT_PREFILL_EVENT = "contact-prefill"
-
-export type ContactPrefillDetail = { interest: string; message: string }
-
-const fieldBaseClass =
-  "rounded-xl border border-input bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-
-function validateForm(state: ContactFormState): ContactFormErrors {
-  const errors: ContactFormErrors = {}
-
-  if (!state.name.trim()) errors.name = "Please tell us your name."
-  if (!state.email.trim()) {
-    errors.email = "Please enter your email."
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email.trim())) {
-    errors.email = "Please enter a valid email address."
-  }
-
-  return errors
-}
-
-function buildInquiryEmailBody(state: ContactFormState) {
-  const lines = [
-    `Hi Untanglit team,`,
-    ``,
-    `I'd like to get in touch.`,
-    ``,
-    `Name: ${state.name.trim()}`,
-    `Email: ${state.email.trim()}`,
-  ]
-  if (state.phone.trim()) lines.push(`Phone: ${state.phone.trim()}`)
-  if (state.interest) lines.push(`Interested in: ${state.interest}`)
-  if (state.message.trim()) {
-    lines.push(``, `Message:`, state.message.trim())
-  }
-  return lines.join("\n")
-}
 
 export function Contact() {
-  const emailDraftHref = `mailto:hello@untanglit.com?subject=${encodeURIComponent("Hello from your website")}&body=${encodeURIComponent(
-    `Hi,\n\nI'd like to get in touch.\n\nName:\nEmail:\nPhone:\n\nWhat I'm looking for:\n\nThanks!`
+
+  const [siteReviewOpen, setSiteReviewOpen] = useState(false)
+
+  const emailDraftHref = `mailto:hello@untanglit.com?subject=${encodeURIComponent("Website Inquiry")}&body=${encodeURIComponent(
+    `\nName:\nEmail:\nPhone:\n\nWhat I'm looking for:\n\n`
   )}`
-
-  const [formState, setFormState] = useState<ContactFormState>(initialFormState)
-  const [formErrors, setFormErrors] = useState<ContactFormErrors>({})
-  const [submitted, setSubmitted] = useState(false)
-  const [showDraftReminder, setShowDraftReminder] = useState(false)
-  const [showPrefillNudge, setShowPrefillNudge] = useState(false)
-
-  useEffect(() => {
-    const handlePrefill = (e: CustomEvent<ContactPrefillDetail>) => {
-      const { interest, message } = e.detail
-      setFormState((prev) => ({
-        ...prev,
-        ...(interest && { interest }),
-        ...(message && { message }),
-      }))
-      setShowPrefillNudge(true)
-    }
-    window.addEventListener(CONTACT_PREFILL_EVENT, handlePrefill as EventListener)
-    return () =>
-      window.removeEventListener(CONTACT_PREFILL_EVENT, handlePrefill as EventListener)
-  }, [])
-
-  function updateField<K extends keyof ContactFormState>(field: K, value: string) {
-    setFormState((prev) => ({ ...prev, [field]: value }))
-    setFormErrors((prev) => {
-      if (!prev[field]) return prev
-      const next = { ...prev }
-      delete next[field]
-      return next
-    })
-  }
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    const nextErrors = validateForm(formState)
-    if (Object.keys(nextErrors).length > 0) {
-      setFormErrors(nextErrors)
-      return
-    }
-
-    const subject = "Website inquiry"
-    const body = buildInquiryEmailBody(formState)
-    const mailtoHref = `mailto:hello@untanglit.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-
-    setSubmitted(true)
-    setFormErrors({})
-    setFormState(initialFormState)
-    setShowPrefillNudge(false)
-    window.location.href = mailtoHref
-    setShowDraftReminder(true)
-    setTimeout(() => setSubmitted(false), 4000)
-  }
 
   return (
     <section id="contact" className="relative overflow-hidden bg-muted py-12 md:py-16">
@@ -130,12 +27,13 @@ export function Contact() {
             <div className="mt-6 rounded-2xl border-2 border-primary/30 bg-primary/5 p-5">
               <p className="font-semibold text-foreground">Schedule a free 15-minute site review</p>
               <p className="mt-1 text-sm text-muted-foreground">No commitment—just honest advice.</p>
-              <a
-                href={siteReviewMailto}
-                className="mt-4 inline-block rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
-              >
-                Request a review
-              </a>
+              <button
+            type="button"
+            onClick={() => setSiteReviewOpen(true)}
+             className="mt-4 inline-block rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+          >
+            Request a review
+          </button>
             </div>
             <h2 className="mt-8 font-serif text-4xl font-bold tracking-tight text-foreground md:text-5xl text-balance">
               Say hello
@@ -150,8 +48,15 @@ export function Contact() {
                 label="hello@untanglit.com"
                 href={emailDraftHref}
               />
-              <ContactInfo icon={Phone} label="760 484 4845" />
-              <ContactInfo icon={MapPin} label="Spokane, WA" />
+              <ContactInfo icon={Phone} label="(253) 260-6209" />
+              <ContactInfo
+                icon={MapPin}
+                label={
+                  <>
+                    Spokane, WA <span className="text-lg font-medium text-muted-foreground">·</span> Puyallup, WA
+                  </>
+                }
+              />
             </div>
 
             {/* Fun note */}
@@ -164,139 +69,41 @@ export function Contact() {
 
           {/* Right column - Form */}
           <div className="rounded-2xl border border-border bg-card p-8 shadow-sm md:p-10">
-            {showPrefillNudge && (
-              <p className="mb-5 rounded-xl bg-secondary/10 px-4 py-3 text-sm text-foreground">
-                Fill in your name, email, and phone below to get your quote.
-              </p>
-            )}
-            {submitted ? (
-              <div className="flex h-full flex-col items-center justify-center py-12 text-center">
-                <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-secondary/10">
-                  <Send size={28} className="text-secondary" />
-                </div>
-                <h3 className="font-serif text-2xl font-bold text-card-foreground">
-                  Email drafted!
-                </h3>
-                <p className="mt-2 text-muted-foreground">
-                  Your note is ready to be sent.
-                </p>
-              </div>
-            ) : (
-              <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="text-sm font-medium text-foreground">
-                    Name
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
-                    value={formState.name}
-                    onChange={(e) => updateField("name", e.target.value)}
-                    aria-invalid={Boolean(formErrors.name)}
-                    className={`${fieldBaseClass} ${formErrors.name ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                    placeholder="Your name"
-                  />
-                  {formErrors.name && (
-                    <p className="text-xs text-destructive">{formErrors.name}</p>
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="email" className="text-sm font-medium text-foreground">
-                    Email
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    value={formState.email}
-                    onChange={(e) => updateField("email", e.target.value)}
-                    aria-invalid={Boolean(formErrors.email)}
-                    className={`${fieldBaseClass} ${formErrors.email ? "border-destructive focus:border-destructive focus:ring-destructive/20" : ""}`}
-                    placeholder="you@example.com"
-                  />
-                  {formErrors.email && (
-                    <p className="text-xs text-destructive">{formErrors.email}</p>
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="phone" className="text-sm font-medium text-foreground">
-                    Phone <span className="text-muted-foreground font-normal">(optional)</span>
-                  </label>
-                  <input
-                    id="phone"
-                    type="tel"
-                    value={formState.phone}
-                    onChange={(e) => updateField("phone", e.target.value)}
-                    className={fieldBaseClass}
-                    placeholder="(555) 123-4567"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="interest" className="text-sm font-medium text-foreground">
-                    What are you looking for? <span className="text-muted-foreground font-normal">(optional)</span>
-                  </label>
-                  <select
-                    id="interest"
-                    value={formState.interest}
-                    onChange={(e) => updateField("interest", e.target.value)}
-                    className={fieldBaseClass}
-                  >
-                    <option value="">Select one if helpful...</option>
-                    <option value="Free 15-min site review">Free 15-minute site review</option>
-                    <option value="Monthly retainer ($99/mo)">Monthly retainer ($99/mo)</option>
-                    <option value="One-time build: 1–3 Pages — ~$2,000 one-time">One-time build: 1–3 Pages — ~$2,000</option>
-                    <option value="One-time build: 4–9 Pages — ~$8,500 one-time">One-time build: 4–9 Pages — ~$8,500</option>
-                    <option value="One-time build: 10+ Pages — ~$19,500 one-time">One-time build: 10+ Pages — ~$19,500</option>
-                    <option value="One-time project (other)">One-time project (other)</option>
-                    <option value="Just exploring">Just exploring</option>
-                  </select>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="message" className="text-sm font-medium text-foreground">
-                    What's on your mind? <span className="text-muted-foreground font-normal">(optional)</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={3}
-                    value={formState.message}
-                    onChange={(e) => updateField("message", e.target.value)}
-                    className={`resize-none ${fieldBaseClass}`}
-                    placeholder="A few words about your project or question is plenty."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
-                >
-                  <Send size={16} />
-                  Send message
-                </button>
-              </form>
-            )}
+            <ContactForm />
           </div>
         </div>
       </div>
-
-      {showDraftReminder && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/35 p-4">
-          <div className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-xl">
-            <h3 className="font-serif text-2xl font-bold text-card-foreground">
-              One quick reminder
-            </h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Make sure to finalize and send your information in the drafted email.
-            </p>
+      {siteReviewOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="site-review-modal-title"
+          onClick={() => setSiteReviewOpen(false)}
+        >
+          <div
+            className="relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border border-border bg-card p-6 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               type="button"
-              onClick={() => setShowDraftReminder(false)}
-              className="mt-5 inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover hover:scale-105"
+              onClick={() => setSiteReviewOpen(false)}
+              className="absolute right-4 top-4 rounded-lg p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              aria-label="Close"
             >
-              Got it
+              <span className="text-xl leading-none">×</span>
             </button>
+            <h2 id="site-review-modal-title" className="pr-8 font-serif text-2xl font-bold text-card-foreground">
+              Request a free 15-minute site review
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">No commitment—just honest advice.</p>
+            <div className="mt-6">
+              <ContactForm
+                idPrefix="hero-modal-"
+                initialInterest="Free 15-min site review"
+                onSuccess={() => setSiteReviewOpen(false)}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -310,12 +117,12 @@ function ContactInfo({
   href,
 }: {
   icon: React.ComponentType<{ size?: number; className?: string }>
-  label: string
+  label: React.ReactNode
   href?: string
 }) {
   const content = (
     <>
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
         <Icon size={18} />
       </div>
       <span className="text-base font-medium text-foreground">{label}</span>

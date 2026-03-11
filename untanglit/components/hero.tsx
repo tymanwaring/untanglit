@@ -1,13 +1,15 @@
 "use client"
 
+import { useState } from "react"
 import { SectionDecorations } from "@/components/section-decorations"
-import { siteReviewMailto } from "@/lib/data"
+import { ContactForm } from "./contact-form"
 
 interface HeroProps {
   onOpenWizard?: () => void
 }
 
 export function Hero({ onOpenWizard }: HeroProps) {
+  const [siteReviewOpen, setSiteReviewOpen] = useState(false)
   const tickerItems = Array.from({ length: 8 }, () => "Untanglit")
   const bandItems = [
     "Copy & Text Updates",
@@ -88,15 +90,51 @@ export function Hero({ onOpenWizard }: HeroProps) {
           </a>
         </div>
         <p className="mt-6 text-center">
-          <a
-            href={siteReviewMailto}
+          <button
+            type="button"
+            onClick={() => setSiteReviewOpen(true)}
             className="text-sm font-medium text-muted-foreground underline decoration-primary/50 underline-offset-2 transition-colors hover:text-primary"
           >
             Schedule a free 15-minute site review
-          </a>
+          </button>
           <span className="mt-1 block text-xs text-muted-foreground">No commitment—just honest advice.</span>
         </p>
       </div>
+
+      {siteReviewOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="site-review-modal-title"
+          onClick={() => setSiteReviewOpen(false)}
+        >
+          <div
+            className="relative max-h-[90vh] w-full max-w-md overflow-y-auto rounded-2xl border border-border bg-card p-6 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setSiteReviewOpen(false)}
+              className="absolute right-4 top-4 rounded-lg p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              aria-label="Close"
+            >
+              <span className="text-xl leading-none">×</span>
+            </button>
+            <h2 id="site-review-modal-title" className="pr-8 font-serif text-2xl font-bold text-card-foreground">
+              Request a free 15-minute site review
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">No commitment—just honest advice.</p>
+            <div className="mt-6">
+              <ContactForm
+                idPrefix="hero-modal-"
+                initialInterest="Free 15-min site review"
+                onSuccess={() => setSiteReviewOpen(false)}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Marquee ticker */}
       <div className="absolute bottom-40 left-0 right-0 overflow-hidden opacity-[0.06]">
