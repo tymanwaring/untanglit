@@ -5,7 +5,7 @@ const cases = [
   {
     tag: "Spots",
     title: "Recharge Energy",
-    link: "https://portal.coastalacquiring.com/login?step=signIn",
+    link: "",
     before:
       "Pages were taking 10–12 seconds to load. Users were waiting forever and leaving before anything showed up.",
     after:
