@@ -48,8 +48,15 @@ export function Contact() {
                 label="hello@untanglit.com"
                 href={emailDraftHref}
               />
-              <ContactInfo icon={Phone} label="760 484 4845" />
-              <ContactInfo icon={MapPin} label="Spokane, WA" />
+              <ContactInfo icon={Phone} label="(253) 260-6209" />
+              <ContactInfo
+                icon={MapPin}
+                label={
+                  <>
+                    Spokane, WA <span className="text-lg font-medium text-muted-foreground">·</span> Puyallup, WA
+                  </>
+                }
+              />
             </div>
 
             {/* Fun note */}
@@ -110,12 +117,12 @@ function ContactInfo({
   href,
 }: {
   icon: React.ComponentType<{ size?: number; className?: string }>
-  label: string
+  label: React.ReactNode
   href?: string
 }) {
   const content = (
     <>
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
         <Icon size={18} />
       </div>
       <span className="text-base font-medium text-foreground">{label}</span>
