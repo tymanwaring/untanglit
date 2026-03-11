@@ -43,32 +43,16 @@ function validateForm(state: ContactFormState): ContactFormErrors {
   return errors
 }
 
-function buildInquiryEmailBody(state: ContactFormState) {
-  const lines = [
-    `Hi Untanglit team,`,
-    ``,
-    `I'd like to get in touch.`,
-    ``,
-    `Name: ${state.name.trim()}`,
-    `Email: ${state.email.trim()}`,
-  ]
-  if (state.phone.trim()) lines.push(`Phone: ${state.phone.trim()}`)
-  if (state.interest) lines.push(`Interested in: ${state.interest}`)
-  if (state.message.trim()) {
-    lines.push(``, `Message:`, state.message.trim())
-  }
-  return lines.join("\n")
-}
+const FORMSPREE_URL = "https://formspree.io/f/maqperwo"
 
 export function Contact() {
-  const emailDraftHref = `mailto:hello@untanglit.com?subject=${encodeURIComponent("Hello from your website")}&body=${encodeURIComponent(
-    `Hi,\n\nI'd like to get in touch.\n\nName:\nEmail:\nPhone:\n\nWhat I'm looking for:\n\nThanks!`
+  const emailDraftHref = `mailto:hello@untanglit.com?subject=${encodeURIComponent("Website Inquiry")}&body=${encodeURIComponent(
+    `\nName:\nEmail:\nPhone:\n\nWhat I'm looking for:\n\n`
   )}`
 
   const [formState, setFormState] = useState<ContactFormState>(initialFormState)
   const [formErrors, setFormErrors] = useState<ContactFormErrors>({})
   const [submitted, setSubmitted] = useState(false)
-  const [showDraftReminder, setShowDraftReminder] = useState(false)
   const [showPrefillNudge, setShowPrefillNudge] = useState(false)
 
   useEffect(() => {
@@ -96,7 +80,7 @@ export function Contact() {
     })
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const nextErrors = validateForm(formState)
     if (Object.keys(nextErrors).length > 0) {
@@ -104,17 +88,30 @@ export function Contact() {
       return
     }
 
-    const subject = "Website inquiry"
-    const body = buildInquiryEmailBody(formState)
-    const mailtoHref = `mailto:hello@untanglit.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    const formData = new FormData()
+    formData.append("name", formState.name.trim())
+    formData.append("email", formState.email.trim())
+    if (formState.phone.trim()) formData.append("phone", formState.phone.trim())
+    if (formState.interest) formData.append("interest", formState.interest)
+    if (formState.message.trim()) formData.append("message", formState.message.trim())
 
-    setSubmitted(true)
-    setFormErrors({})
-    setFormState(initialFormState)
-    setShowPrefillNudge(false)
-    window.location.href = mailtoHref
-    setShowDraftReminder(true)
-    setTimeout(() => setSubmitted(false), 4000)
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      })
+      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string }
+      const success = res.ok && (data.ok !== false)
+      if (!success) throw new Error(data.error ?? "Submit failed")
+      setSubmitted(true)
+      setFormErrors({})
+      setFormState(initialFormState)
+      setShowPrefillNudge(false)
+      setTimeout(() => setSubmitted(false), 4000)
+    } catch {
+      setFormErrors({ email: "Something went wrong. Please try again or email us directly." })
+    }
   }
 
   return (
@@ -178,17 +175,24 @@ export function Contact() {
                   Email drafted!
                 </h3>
                 <p className="mt-2 text-muted-foreground">
-                  Your note is ready to be sent.
+                  Your message is on its way!
                 </p>
               </div>
             ) : (
-              <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <form
+                noValidate
+                action={FORMSPREE_URL}
+                method="POST"
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-5"
+              >
                 <div className="flex flex-col gap-2">
                   <label htmlFor="name" className="text-sm font-medium text-foreground">
                     Name
                   </label>
                   <input
                     id="name"
+                    name="name"
                     type="text"
                     value={formState.name}
                     onChange={(e) => updateField("name", e.target.value)}
@@ -207,6 +211,7 @@ export function Contact() {
                   </label>
                   <input
                     id="email"
+                    name="email"
                     type="email"
                     value={formState.email}
                     onChange={(e) => updateField("email", e.target.value)}
@@ -225,6 +230,7 @@ export function Contact() {
                   </label>
                   <input
                     id="phone"
+                    name="phone"
                     type="tel"
                     value={formState.phone}
                     onChange={(e) => updateField("phone", e.target.value)}
@@ -239,6 +245,7 @@ export function Contact() {
                   </label>
                   <select
                     id="interest"
+                    name="interest"
                     value={formState.interest}
                     onChange={(e) => updateField("interest", e.target.value)}
                     className={fieldBaseClass}
@@ -260,6 +267,7 @@ export function Contact() {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     rows={3}
                     value={formState.message}
                     onChange={(e) => updateField("message", e.target.value)}
@@ -280,26 +288,6 @@ export function Contact() {
           </div>
         </div>
       </div>
-
-      {showDraftReminder && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/35 p-4">
-          <div className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-xl">
-            <h3 className="font-serif text-2xl font-bold text-card-foreground">
-              One quick reminder
-            </h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Make sure to finalize and send your information in the drafted email.
-            </p>
-            <button
-              type="button"
-              onClick={() => setShowDraftReminder(false)}
-              className="mt-5 inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover hover:scale-105"
-            >
-              Got it
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   )
 }
