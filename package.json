@@ -12,6 +12,7 @@
     "postinstall": "cd untanglit && npm install && cd ../modern_templates/construction && npm install && cd ../indie-author && npm install"
   },
   "devDependencies": {
+    "exceljs": "^4.4.0",
     "nx": "22.5.3"
   }
 }
