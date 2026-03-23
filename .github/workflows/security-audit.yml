@@ -1,0 +1,41 @@
+name: Security Audit
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project:
+          - path: "."
+            name: "workspace root"
+          - path: "untanglit"
+            name: "untanglit app"
+          - path: "modern_templates/construction"
+            name: "construction template"
+          - path: "modern_templates/indie-author"
+            name: "indie-author template"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: ${{ matrix.project.path }}/package-lock.json
+
+      - name: Install dependencies (${{ matrix.project.name }})
+        working-directory: ${{ matrix.project.path }}
+        run: npm install --prefer-offline
+
+      - name: Run audit (${{ matrix.project.name }})
+        working-directory: ${{ matrix.project.path }}
+        run: npm audit --audit-level=high
