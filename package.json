@@ -9,7 +9,7 @@
     "dev:indie-author": "nx run indie-author:dev",
     "start": "nx run untanglit:start",
     "lint": "nx run untanglit:lint",
-    "postinstall": "cd untanglit && npm install && cd ../modern_templates/construction && npm install && cd ../indie-author && npm install"
+    "postinstall": "git config core.hooksPath .githooks && cd untanglit && npm install && cd ../modern_templates/construction && npm install && cd ../indie-author && npm install"
   },
   "devDependencies": {
     "exceljs": "^4.4.0",

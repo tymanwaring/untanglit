@@ -1,0 +1,41 @@
+#!/bin/sh
+# Pre-commit hook: blocks commits containing malware signatures or .env secrets
+
+ERRORS=0
+
+# ── 1. Block .env files ───────────────────────────────────────────────────────
+ENV_FILES=$(git diff --cached --name-only | grep -E '(^|/)\.env(\.|$)')
+if [ -n "$ENV_FILES" ]; then
+  echo ""
+  echo "  BLOCKED: Attempted to commit .env file(s) containing secrets:"
+  echo "$ENV_FILES" | sed 's/^/    - /'
+  echo "  Remove them with: git restore --staged <file>"
+  echo ""
+  ERRORS=1
+fi
+
+# ── 2. Block known malware signatures ────────────────────────────────────────
+# Checks for the obfuscated payload marker injected into .mjs config files
+MALWARE_PATTERNS="global\['!'\]=|_\$_[a-zA-Z0-9]*=\(function|sfL\('wuqktam"
+
+INFECTED_FILES=$(git diff --cached --name-only | while read file; do
+  if git show ":$file" 2>/dev/null | grep -qE "$MALWARE_PATTERNS"; then
+    echo "$file"
+  fi
+done)
+
+if [ -n "$INFECTED_FILES" ]; then
+  echo ""
+  echo "  BLOCKED: Malware signature detected in staged file(s):"
+  echo "$INFECTED_FILES" | sed 's/^/    - /'
+  echo "  These files contain obfuscated injected code. Do NOT commit them."
+  echo "  Run a malware scan on this machine immediately."
+  echo ""
+  ERRORS=1
+fi
+
+if [ "$ERRORS" -ne 0 ]; then
+  exit 1
+fi
+
+exit 0
