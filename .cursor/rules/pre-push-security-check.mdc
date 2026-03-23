@@ -1,0 +1,36 @@
+---
+description: Security checklist to run before every git push
+alwaysApply: true
+---
+
+# Pre-Push Security Check
+
+Before pushing ANY branch, always run these checks and report findings to the user:
+
+## 1. Scan staged/committed files for malware signatures
+```bash
+git diff origin/main...HEAD --name-only
+```
+Then for each changed file, look for:
+- `global['!']` — known malware marker
+- `_$_` followed by obfuscated function patterns
+- `createRequire` inside a non-standard config file
+- Large single-line blobs of encoded/obfuscated characters
+- Any `eval(`, `Function(`, or `atob(` in config files (`.mjs`, `.cjs`, `.js`)
+
+## 2. Check no secrets are being pushed
+```bash
+git diff origin/main...HEAD -- "*.env*" "**/.env"
+```
+Alert if any `.env` files appear in the diff.
+
+## 3. Check .gitignore is still intact
+Verify `.env`, `.env.*` are still present in `.gitignore` and have not been removed or modified.
+
+## 4. Report to user before pushing
+Always summarize findings like:
+- "No malware signatures found"
+- "No .env files in diff"
+- ".gitignore protections intact"
+
+If anything looks suspicious, STOP and alert the user before pushing. Do not proceed until the user confirms.
