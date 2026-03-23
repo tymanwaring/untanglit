@@ -1,0 +1,15 @@
+---
+description: Always push via feature branch, never directly to main
+alwaysApply: true
+---
+
+# Git Branch Workflow
+
+NEVER push directly to `main`. Always:
+
+1. Create a descriptive feature branch: `git checkout -b <branch-name>`
+2. Commit changes to that branch
+3. Push the branch: `git push origin <branch-name>`
+4. Let the user merge via PR on GitHub
+
+This applies to ALL changes — even small fixes — so every change is reviewable and revertable before it hits main.
