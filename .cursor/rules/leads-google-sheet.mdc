@@ -1,0 +1,51 @@
+---
+description: Rules for uploading leads to the Untanglit Google Sheet
+alwaysApply: true
+---
+
+# Untanglit Leads Google Sheet
+
+**Spreadsheet ID:** `1Me3cAVvy_8lB4yDs2mWx9sRJdk_7KxhEvQ5aAzz9wDI`  
+**Sheet ID (Leads tab):** `1065914535`  
+**Key file:** `C:/Users/atman/Documents/Cursor_MCPs/untanglit-keys.json`
+
+## Column Order (A–R)
+
+| Col | Field |
+|-----|-------|
+| A | business |
+| B | businessType |
+| C | phoneNumber |
+| D | area |
+| E | leadQuality |
+| F | status |
+| G | trustScore |
+| H | recommendedService |
+| I | websitePlatform |
+| J | mobileScore |
+| K | contactName |
+| L | email |
+| M | followUpDate |
+| N | dateContacted |
+| O | link |
+| P | websiteLink |
+| Q | pitchHook |
+| R | notes |
+
+## Required Steps for Every Batch Upload
+
+1. **Upload data** with the column order above (D=area, NOT link).
+2. **Apply alternating row colors**: even rows = white `{r:1,g:1,b:1}`, odd rows = light gray `{r:0.949,g:0.953,b:0.957}`. Also set `verticalAlignment: TOP` and `wrapStrategy: WRAP`.
+3. **Lead Quality color coding** (column E) — use conditional formatting, already set to row 400. If extending beyond 400, update the rules' `endRowIndex`. Colors:
+   - `High` → green bg `{r:0.714,g:0.882,b:0.737}`, dark green bold text `{r:0.153,g:0.392,b:0.196}`
+   - `Medium` → amber bg `{r:0.996,g:0.929,b:0.678}`, dark amber bold text `{r:0.596,g:0.439,b:0.004}`
+   - `Low` → red bg `{r:0.957,g:0.780,b:0.773}`, dark red bold text `{r:0.647,g:0.118,b:0.102}`
+4. **Data validation dropdowns** — already extend to row 400. If adding rows beyond that, extend them.
+   - Col E: `High`, `Medium`, `Low`
+   - Col F: `Not contacted`, `Contacted`, `Interested`, `Follow Up`, `Converted`, `Denied`, `Verify Active`
+   - Col G: `1`–`5`
+
+## Notes
+- Use Node.js scripts with `googleapis` for uploads (not MCP tools directly — large JSON causes parse errors).
+- Always `Grep` leads.xml for duplicates before appending a new batch.
+- The XML file (`data/leads.xml`) is the source of truth; the sheet is the primary working view.

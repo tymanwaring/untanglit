@@ -4,7 +4,8 @@ node_modules/
 
 .nx/
 
-.cursor/
+.cursor/*
+!.cursor/rules/
 
 # Environment variables (secrets)
 .env
