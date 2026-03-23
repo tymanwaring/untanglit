@@ -7,5 +7,7 @@ node_modules/
 .cursor/
 
 # Environment variables (secrets)
-.env.*.local
+.env
+.env.*
+!.env.example
 config.bat
