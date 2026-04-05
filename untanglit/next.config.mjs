@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */ // next config
 const nextConfig = {
   // Monorepo root (for Turbopack when building from repo root)
   turbopack: { root: process.cwd() },
